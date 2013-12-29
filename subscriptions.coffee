@@ -17,7 +17,7 @@ pubSubClient = redis.createClient(settings.REDIS_PORT, settings.REDIS_HOST)
 pubSubClient.psubscribe subscriptionPattern
 
 pubSubClient.on 'pmessage', (pattern, channel, message) ->
-  helpers.debug 'Handling pmessage: ' + message
+  helpers.debug 'Handling pmessage'
 
   # Every time we receive a message, we check to see if it matches
   # the subscription pattern. If it does, then go ahead and parse it.
@@ -45,7 +45,7 @@ pubSubClient.on 'pmessage', (pattern, channel, message) ->
       media: data
       channelName: channelName
 
-    io.sockets.emit('newMedia', data)
+    io.sockets.emit('newMedia-'+channelName, data)
     # for sessionId of io.sockets.clients
     #   socket.clients[sessionId].send JSON.stringify(update)
 
