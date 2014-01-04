@@ -16,17 +16,19 @@ isValidRequest = (request) ->
 debug = (msg) ->
   console.log msg  if settings.debug
 
-#   Each update that comes from Instagram merely tells us that there's new
-#   data to go fetch. The update does not include the data. So, we take the
-#   tag ID from the update, and make the call to the API.
+# Each update that comes from Instagram merely tells us that there's new
+# data to go fetch. The update does not include the data. So, we take the
+# tag ID from the update, and make the call to the API.
 processTag = (tagName, update) ->
   path = '/v1/tags/' + update.object_id + '/media/recent/'
   getMinID tagName, (error, minID) ->
     queryString = '?client_id=' + settings.CLIENT_ID
     if minID
+      debug 'Getting ' + tagName + ' from ' + minID
       queryString += '&min_id=' + minID
     else
       # If this is the first update, just grab the most recent.
+      debug 'First update for ' + tagName
       queryString += '&count=1'
     options =
       host: settings.apiHost
@@ -39,7 +41,7 @@ processTag = (tagName, update) ->
 
     # Asynchronously ask the Instagram API for new media for a given
     # tag.
-    debug 'processTag: getting ' + path
+    debug 'processTag: getting ' + path + ' ' + queryString
     settings.httpClient.get options, (response) ->
       data = ''
       response.on 'data', (chunk) ->
@@ -53,17 +55,17 @@ processTag = (tagName, update) ->
         catch e
           console.log 'Couldn\'t parse data. Malformed?'
           return
-        if not parsedResponse or not parsedResponse['data'] or
-           not parsedResponse['data']['type'] == 'video'
-          console.log 'Did not receive data for ' + tagName + ':'
-          console.log data
+        if not parsedResponse or not parsedResponse['data']
+          console.log 'Did not receive data for ' + tagName
+          # console.log data
           return
 
+        video_data = (datum for datum in parsedResponse['data'] when datum['type'] == 'video')
         setMinID tagName, parsedResponse['data']
 
         # Let all the redis listeners know that we've got new media.
-        redisClient.publish 'channel:' + tagName, data
-        debug 'Published: ' + data
+        redisClient.publish 'channel:' + tagName, video_data
+        debug 'Published data for ' + tagName
 
 getMedia = (callback) ->
 
