@@ -23,13 +23,14 @@ pubSubClient.on 'pmessage', (pattern, channel, message) ->
   # the subscription pattern. If it does, then go ahead and parse it.
   if pattern is subscriptionPattern
     try
-      data = JSON.parse(message)['data']
+      data = JSON.parse(message)
 
       # Channel name is really just a 'humanized' version of a slug
       # san-francisco turns into san francisco. Nothing fancy, just
       # works.
       channelName = channel.split(':')[1].replace(/-/g, ' ')
     catch e
+      helpers.debug e
       return
 
     # Store individual media JSON for retrieval by homepage later
@@ -37,7 +38,7 @@ pubSubClient.on 'pmessage', (pattern, channel, message) ->
       media = data[index]
       media.meta = {}
       media.tag = channelName
-      redisClient.lpush 'media:objects', JSON.stringify(media)
+      redisClient.lpush 'media:objects:' + channelName, JSON.stringify(media)
 
     # Send out whole update to the listeners
     update =
@@ -45,6 +46,7 @@ pubSubClient.on 'pmessage', (pattern, channel, message) ->
       media: data
       channelName: channelName
 
+    helpers.debug 'emitting message for ' + channelName
     io.sockets.emit('newMedia-'+channelName, data)
     # for sessionId of io.sockets.clients
     #   socket.clients[sessionId].send JSON.stringify(update)
@@ -52,3 +54,4 @@ pubSubClient.on 'pmessage', (pattern, channel, message) ->
 io.sockets.on "connection", (socket) ->
   socket.emit "greet",
     greeting: "hello"
+

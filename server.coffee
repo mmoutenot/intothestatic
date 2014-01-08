@@ -39,8 +39,17 @@ app.post '/callbacks/tag/:tagName', (request, response) ->
 
 # Render the home page
 app.get '/', (request, response) ->
-  helpers.getMedia (error, media) ->
+  tagName = 'snow'
+  helpers.getMedia tagName, (error, tagName, media) ->
     response.render 'tv.jade',
+      tag: tagName,
       videos: media
 
-# app.listen settings.appPort
+app.get '/tag/:tagName', (request, response) ->
+  tagName = request.params.tagName
+  subscriptionCreated = helpers.maybeCreateSubscription tagName
+  helpers.getMedia tagName, (error, tagName, media) ->
+    response.json(
+      tag: tagName,
+      videos: media
+    )

@@ -1,3 +1,5 @@
+request = require 'request'
+
 isValidRequest = (request) ->
   # First, let's verify the payload's integrity by making sure it's
   # coming from a trusted source. We use the client secret as the key
@@ -16,12 +18,43 @@ isValidRequest = (request) ->
 debug = (msg) ->
   console.log msg  if settings.debug
 
+maybeCreateSubscription = (tagName) ->
+  debug 'maybe creating subscription for ' + tagName
+  subscription_exists = false
+  redisClient.sismember ['subscriptions', tagName], (err, reply) ->
+    subscription_exists = reply
+    if subscription_exists
+      debug 'subscription for ' + tagName + ' already exists'
+      return
+
+    post_data =
+      'client_id' : settings.CLIENT_ID,
+      'client_secret' : settings.CLIENT_SECRET,
+      'object' : 'tag',
+      'object_id' : tagName,
+      'aspect' : 'media',
+      'callback_url' : settings.SUB_CALLBACK + tagName
+
+    request.post(
+      settings.SUB_ENDPOINT,
+      form: post_data,
+      (error, response, body) ->
+        debug response.statusCode + ':' + error
+        if !error and response.statusCode == 200
+          debug 'Subscription created: ' + body
+          redisClient.sadd 'subscriptions', tagName
+    )
+
 # Each update that comes from Instagram merely tells us that there's new
 # data to go fetch. The update does not include the data. So, we take the
 # tag ID from the update, and make the call to the API.
 processTag = (tagName, update) ->
   path = '/v1/tags/' + update.object_id + '/media/recent/'
   getMinID tagName, (error, minID) ->
+    if minID is 'XXX'
+      debug 'Request for ' + tagName + ' already in progress'
+      return
+    setMinID tagName, 'XXX'
     queryString = '?client_id=' + settings.CLIENT_ID
     if minID
       debug 'Getting ' + tagName + ' from ' + minID
@@ -41,7 +74,7 @@ processTag = (tagName, update) ->
 
     # Asynchronously ask the Instagram API for new media for a given
     # tag.
-    debug 'processTag: getting ' + path + ' ' + queryString
+    debug 'processTag: getting ' + path + queryString
     settings.httpClient.get options, (response) ->
       data = ''
       response.on 'data', (chunk) ->
@@ -55,57 +88,55 @@ processTag = (tagName, update) ->
         catch e
           console.log 'Couldn\'t parse data. Malformed?'
           return
+
         if not parsedResponse or not parsedResponse['data']
           console.log 'Did not receive data for ' + tagName
-          # console.log data
           return
 
         video_data = (datum for datum in parsedResponse['data'] when datum['type'] == 'video')
-        setMinID tagName, parsedResponse['data']
+        setMinID tagName, parsedResponse['pagination']['min_tag_id']
 
-        # Let all the redis listeners know that we've got new media.
-        redisClient.publish 'channel:' + tagName, video_data
-        debug 'Published data for ' + tagName
+        if video_data.length > 0
+          # Let all the redis listeners know that we've got new media.
+          redisClient.publish 'channel:' + tagName, JSON.stringify(video_data)
+          debug 'Published data for ' + tagName
+        else
+          debug 'No videos received this time'
 
-getMedia = (callback) ->
+getMedia = (tagName, callback) ->
 
   # This function gets the most recent media stored in redis
-  redisClient.lrange 'media:objects', 0, 14, (error, media) ->
+  redisClient.lrange 'media:objects:' + tagName, 0, 14, (error, media) ->
     debug 'getMedia: got ' + media.length + ' items'
 
     # Parse each media JSON to send to callback
     media = media.map((json) ->
       JSON.parse json
     )
-    console.log media
-    callback error, media
+    callback error, tagName, media
 
-#   In order to only ask for the most recent media, we store the MAXIMUM ID
-#   of the media for every tag we've fetched. This way, when we get an
-#   update, we simply provide a min_id parameter to the Instagram API that
-#   fetches all media that have been posted *since* the min_id.
+# In order to only ask for the most recent media, we store the MAXIMUM ID
+# of the media for every tag we've fetched. This way, when we get an
+# update, we simply provide a min_id parameter to the Instagram API that
+# fetches all media that have been posted *since* the min_id.
 #
-#   You might notice there's a fatal flaw in this logic: We create
-#   media objects once your upload finishes, not when you click 'done' in the
-#   app. This means that if you take longer to press done than someone else
-#   who will trigger an update on your same tag, then we will skip
-#   over your media. Alas, this is a demo app, and I've had far too
-#   much red bull – so we'll live with it for the time being.
+# You might notice there's a fatal flaw in this logic: We create
+# media objects once your upload finishes, not when you click 'done' in the
+# app. This means that if you take longer to press done than someone else
+# who will trigger an update on your same tag, then we will skip
+# over your media.
 
 getMinID = (tagName, callback) ->
   redisClient.get 'min-id:channel:' + tagName, callback
 
-setMinID = (tagName, data) ->
-  sorted = data.sort((a, b) ->
-    parseInt(b.id) - parseInt(a.id)
-  )
-  nextMinID = undefined
+setMinID = (tagName, min_tag_id) ->
   try
-    nextMinID = parseInt(sorted[0].id)
-    redisClient.set 'min-id:channel:' + tagName, nextMinID
+    if not min_tag_id then min_tag_id = ''
+    debug 'setting min_tag_id: ' + min_tag_id
+    redisClient.set 'min-id:channel:' + tagName, min_tag_id
   catch e
     console.log 'Error parsing min ID'
-    console.log sorted
+    console.log e
 
 ########################################
 # Requires and Exports
@@ -116,9 +147,10 @@ crypto   = require('crypto')
 
 redisClient = redis.createClient(settings.REDIS_PORT, settings.REDIS_HOST)
 
-exports.isValidRequest = isValidRequest
-exports.debug          = debug
-exports.processTag     = processTag
-exports.getMedia       = getMedia
-exports.getMinID       = getMinID
-exports.setMinID       = setMinID
+exports.isValidRequest          = isValidRequest
+exports.debug                   = debug
+exports.maybeCreateSubscription = maybeCreateSubscription
+exports.processTag              = processTag
+exports.getMedia                = getMedia
+exports.getMinID                = getMinID
+exports.setMinID                = setMinID
