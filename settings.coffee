@@ -7,6 +7,7 @@ appPort = process.env.IG_APP_PORT or 3000
 http   = require 'http'
 server = http.createServer(app).listen appPort
 io     = require('socket.io').listen server
+ig     = require('instagram-node').instagram()
 
 exports.io            = io
 exports.app           = app
@@ -31,6 +32,8 @@ app.configure ->
   app.use express.bodyParser()
   app.use app.router
   app.use express.static(__dirname + '/public/')
+
+  ig.use(client_id: exports.CLIENT_ID, client_secret: exports.CLIENT_SECRET)
 
 app.configure 'development', ->
   app.use express.logger()

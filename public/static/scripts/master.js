@@ -1,38 +1,32 @@
-var videoQueue = [];
+var crt = new CRT();
 var socket = io.connect('http://localhost:3000');
 
-socket.on('greet', function(data){
-  console.log(data);
-});
-
-var urlSplit = window.location.pathname.split('/');
+function enqueueVideo(v){
+  video_data = {
+    'id' : v.id,
+    'preview' : v.images.low_resolution.url,
+    'sources' : {
+      'hi' : v.videos.standard_resolution.url,
+      'lo' : v.videos.low_resolution.url
+    },
+    'details' : {
+      'username' : v.user.username,
+      'post' : v.caption,
+      'location' : v.location
+    }
+  }
+  crt.enqueue(video_data);
+}
 
 function processNewMedia(data){
-    var playOnAdd = false;
-    var videoPlaying = $('video')[0].paused;
-    if(videoQueue.length == 0 &&
-      ($('video').attr('src') == 'undefined' || $('video').attr('src') == '' || !videoPlaying)){
-      playOnAdd = true;
-    }
-
-    $(data).each(function(index, media){
-      videoQueue.push(media);
-      if(playOnAdd) playNextVideo();
-    });
+  $(data).each(function(index, media){
+    enqueueVideo(media);
+  });
 }
 
 function createSocketListener(tagName){
   console.log('Subscribing to the ' + tagName + ' channel');
   socket.on('newMedia-'+tagName, processNewMedia);
-}
-
-function playNextVideo(){
-  var nextVideo = videoQueue.shift();
-  var url = nextVideo.videos.standard_resolution.url;
-  console.log("Playing " + url);
-  $video = $('video')[0];
-  $video.setAttribute('src', url);
-  $video.play();
 }
 
 function introduction() {
@@ -69,9 +63,13 @@ function setDefaultChannel($input) {
   }
 }
 
+function playNextVideo(){
+  crt.playNext();
+}
+
 $().ready(function() {
   $('#wrap').tubular({videoId: 'bf7NbRFyg3Y', repeat: true});
-  setTimeout(introduction(), 2500);
+  // setTimeout(introduction(), 2500);
 
   $('input').bind("enterKey",function(e){
     var newTag = $(this)[0].value;
@@ -79,27 +77,32 @@ $().ready(function() {
     socket.removeListener('newMedia-'+tag, processNewMedia);
     console.log('unbinding from ' + tag + ' channel');
 
+    crt.clearQueue();
+
     tag = newTag;
     createSocketListener(tag);
 
     console.log('tag submitted: ' + newTag);
 
+    // get backlog of videos to start playing
     $.ajax({
       type: 'GET',
       url: '/tag/' + newTag
     }).done(function(data) {
-      console.log(data);
-      videoQueue = data['videos'];
-      playNextVideo();
+      data['videos'].forEach(function(v){
+        enqueueVideo(v);
+      });
     });
   });
 
   $('input').keyup(function(e){
-    if(e.keyCode == 13)
-    {
+    if(e.keyCode == 13) {
       $(this).trigger("enterKey");
     }
   });
 
+  $('#wrap .center #video_box').append(crt.$el_video);
+  $('#wrap .center .pane').prepend(crt.$el_details);
+  crt.fullscreen();
 });
 

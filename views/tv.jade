@@ -1,12 +1,21 @@
 doctype html
 html
   head
-    title Instagram - Real-time updates demo
+    title INTO THE STATIC
+
     link(rel="stylesheet", href="/static/styles/reset.css", type="text/css")
     link(rel="stylesheet", href="/static/styles/master.css", type="text/css")
     script(src="/socket.io/socket.io.js", type="text/javascript")
     script(src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js", type="text/javascript")
     script(src="/static/scripts/jquery.tubular.1.0.js", type="text/javascript")
+    script(src="http://underscorejs.org/underscore.js", type="text/javascript")
+    script(src="/static/scripts/video.js", type="text/javascript")
+
+    <!-- SEMANTIC UI -->
+    link(rel="stylesheet", href="/static/semantic/elements/icon.css", type="text/css")
+
+    link(rel="stylesheet", href="/static/semantic/modules/video.css", type="text/css")
+    script(src="/static/semantic/modules/video.js", type="text/javascript")
 
     script.
       var tag = "#{tag}";
@@ -17,12 +26,10 @@ html
         input(type="text", value="static")
         #cursor
       .center
-        video
-        a(onclick="playNextVideo", href="javascript:playNextVideo();") Skip
-        script.
-          $('video').on('ended', function(event) {
-            if(videoQueue.length){
-              console.log('video ended');
-              playNextVideo();
-            }
-          });
+        #video_box
+          <!-- #video_overlay -->
+          <!--   a -->
+          <!--     i.link.circular.inverted.empty.heart.basic.icon -->
+        .pane
+          .controls
+            a(onclick="playNextVideo", href="javascript:playNextVideo();") Skip

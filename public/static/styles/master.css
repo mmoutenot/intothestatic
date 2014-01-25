@@ -12,11 +12,11 @@ body {
 }
 
 p {
-	font-size: .8125em;
+	font-size: 1em;
 	line-height: 18px;
-	color:  #aaa;
+	/* color:  #aaa; */
 	font-weight: lighter;
-	margin-bottom: 18px;
+	margin-bottom: 8px;
 }
 
 #header { text-align: center; }
@@ -25,6 +25,20 @@ h1 {
   font-size: 100px;
   color: white;
   text-align: center;
+}
+
+.pane {
+  padding: 20px 20px 20px 20px;
+  background-color: rgba(40, 40, 40, 0.2);
+  height: 40px;
+  color: white;
+}
+.controls { float: right; width:40px; }
+.details { float: left; width:560px; }
+.post {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 input {
@@ -37,6 +51,20 @@ input {
 }
 
 video {}
+
+#video_box {
+  /* float: left; */
+}
+
+#video_overlay {
+  position:absolute;
+  float:right;
+  width:600px;
+  height:600px;
+  z-index:300000;
+  padding: 20px;
+}
+
 .center { margin: 0 auto; width: 640px; }
 
 h1 img {
@@ -52,12 +80,10 @@ h2 {
 	line-height: 27px;
 	margin-bottom: 9px;
 }
+
 a {
 	color:  #eee;
 	text-decoration: none;
-}
-a:hover {
-	text-decoration: underline;
 }
 
 .cols {

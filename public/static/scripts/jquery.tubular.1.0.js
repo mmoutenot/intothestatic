@@ -64,7 +64,6 @@
                     'onStateChange': onPlayerStateChange
                 }
             });
-            player.setPlaybackQuality('small');
         }
 
         window.onPlayerReady = function(e) {

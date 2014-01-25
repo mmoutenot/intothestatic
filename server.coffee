@@ -33,7 +33,7 @@ app.post '/callbacks/tag/:tagName', (request, response) ->
   updates = request.body
   for index of updates
     update = updates[index]
-    helpers.processTag tagName, update  if update['object'] is 'tag'
+    helpers.processTag tagName if update['object'] is 'tag'
   helpers.debug 'Processed ' + updates.length + ' updates'
   response.send 'OK'
 

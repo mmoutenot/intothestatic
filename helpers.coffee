@@ -1,4 +1,10 @@
+settings = require './settings'
 request = require 'request'
+
+# set up instagram client
+Instagram = require 'instagram-node-lib'
+Instagram.set('client_id', settings.CLIENT_ID)
+Instagram.set('client_secret', settings.CLIENT_SECRET)
 
 isValidRequest = (request) ->
   # First, let's verify the payload's integrity by making sure it's
@@ -27,87 +33,66 @@ maybeCreateSubscription = (tagName) ->
       debug 'subscription for ' + tagName + ' already exists'
       return
 
-    post_data =
-      'client_id' : settings.CLIENT_ID,
-      'client_secret' : settings.CLIENT_SECRET,
-      'object' : 'tag',
-      'object_id' : tagName,
-      'aspect' : 'media',
-      'callback_url' : settings.SUB_CALLBACK + tagName
+    Instagram.tags.subscribe(
+      object_id : tagName
+      callback_url : settings.SUB_CALLBACK + tagName
+      complete : (data, pagination) ->
+        redisClient.sadd 'subscriptions', tagName
+      error : (errorMessage, errorObject, caller) ->
+        debug errorMessage
+    )
 
-    request.post(
-      settings.SUB_ENDPOINT,
-      form: post_data,
-      (error, response, body) ->
-        debug response.statusCode + ':' + error
-        if !error and response.statusCode == 200
-          debug 'Subscription created: ' + body
-          redisClient.sadd 'subscriptions', tagName
+backfillTag = (tagName, num, maxID) ->
+  redisClient.llen 'media:objects:' + tagName, (error, tagCount) ->
+    debug 'TAG COUNT: ' + tagCount
+    debug 'MAX ID: ' + maxID
+    Instagram.tags.recent(
+      name : tagName
+      max_id: maxID
+      complete : (data, pagination) ->
+        videos = (media for media in data when media['type'] == 'video')
+        if videos.length > 0
+          redisClient.publish 'channel:' + tagName, JSON.stringify(videos)
+        newTagCount = tagCount + videos.length
+        debug 'found ' + videos.length + ' new videos for ' + tagName
+        backfillTag(tagName, num, pagination['next_max_id']) if newTagCount < num
+      error : (errorMessage, errorObject, caller) ->
+        debug errorMessage
+        setMaxID tagName, ''
     )
 
 # Each update that comes from Instagram merely tells us that there's new
 # data to go fetch. The update does not include the data. So, we take the
 # tag ID from the update, and make the call to the API.
-processTag = (tagName, update) ->
-  path = '/v1/tags/' + update.object_id + '/media/recent/'
+processTag = (tagName) ->
   getMinID tagName, (error, minID) ->
-    if minID is 'XXX'
+    if minID == "XXX"
       debug 'Request for ' + tagName + ' already in progress'
       return
     setMinID tagName, 'XXX'
-    queryString = '?client_id=' + settings.CLIENT_ID
-    if minID
-      debug 'Getting ' + tagName + ' from ' + minID
-      queryString += '&min_id=' + minID
-    else
-      # If this is the first update, just grab the most recent.
-      debug 'First update for ' + tagName
-      queryString += '&count=1'
-    options =
-      host: settings.apiHost
-
-      # Note that in all implementations, basePath will be ''. Here at
-      # instagram, this aint true ;)
-      path: settings.basePath + path + queryString
-
-    options['port'] = settings.apiPort  if settings.apiPort
-
-    # Asynchronously ask the Instagram API for new media for a given
-    # tag.
-    debug 'processTag: getting ' + path + queryString
-    settings.httpClient.get options, (response) ->
-      data = ''
-      response.on 'data', (chunk) ->
-        debug 'Got data...'
-        data += chunk
-
-      response.on 'end', ->
-        debug 'Got end.'
-        try
-          parsedResponse = JSON.parse(data)
-        catch e
-          console.log 'Couldn\'t parse data. Malformed?'
-          return
-
-        if not parsedResponse or not parsedResponse['data']
-          console.log 'Did not receive data for ' + tagName
-          return
-
-        video_data = (datum for datum in parsedResponse['data'] when datum['type'] == 'video')
-        setMinID tagName, parsedResponse['pagination']['min_tag_id']
-
-        if video_data.length > 0
-          # Let all the redis listeners know that we've got new media.
-          redisClient.publish 'channel:' + tagName, JSON.stringify(video_data)
-          debug 'Published data for ' + tagName
-        else
-          debug 'No videos received this time'
+    Instagram.tags.recent(
+      name : tagName
+      min_id: minID
+      complete : (data, pagination) ->
+        setMinID tagName, pagination['min_tag_id']
+        recentVideos = (media for media in data when media['type'] == 'video')
+        if recentVideos.length > 0
+          redisClient.publish 'channel:' + tagName, JSON.stringify(recentVideos)
+      error : (errorMessage, errorObject, caller) ->
+        setMinID tagName, ''
+        debug errorMessage
+    )
 
 getMedia = (tagName, callback) ->
 
   # This function gets the most recent media stored in redis
   redisClient.lrange 'media:objects:' + tagName, 0, 14, (error, media) ->
     debug 'getMedia: got ' + media.length + ' items'
+
+    # if there are no existing videos, let's backfill a dozen to start playing
+    if media.length == 0
+      debug 'Backfilling tag: ' + tagName
+      backfillTag tagName, 15, ''
 
     # Parse each media JSON to send to callback
     media = media.map((json) ->
