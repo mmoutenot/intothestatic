@@ -39,17 +39,55 @@ app.post '/callbacks/tag/:tagName', (request, response) ->
 
 # Render the home page
 app.get '/', (request, response) ->
-  tagName = 'snow'
-  helpers.getMedia tagName, (error, tagName, media) ->
-    response.render 'tv.jade',
-      tag: tagName,
-      videos: media
+  tagName = 'static'
+  external_auth_url = settings.inst.oauth.authorization_url(
+    scope: 'basic'
+    display: 'touch'
+  )
+  authed = typeof request.session.instagram_access_token != 'undefined'
+  helpers.debug request.session.access_token
+  response.render 'tv.jade',
+    tag: tagName,
+    authed: authed
+    external_auth_url: external_auth_url
 
 app.get '/tag/:tagName', (request, response) ->
   tagName = request.params.tagName
-  subscriptionCreated = helpers.maybeCreateSubscription tagName
+  subscriptionCreated =
+    helpers.maybeCreateSubscription(tagName, request.session.instagram_access_token)
   helpers.getMedia tagName, (error, tagName, media) ->
     response.json(
       tag: tagName,
       videos: media
     )
+
+app.get '/:tagName', (request, response) ->
+  tagName = request.params.tagName
+
+  external_auth_url = settings.inst.oauth.authorization_url(
+    scope: 'basic'
+    display: 'touch'
+  )
+  authed = typeof request.session.instagram_access_token != 'undefined'
+  helpers.debug request.session.access_token
+
+  subscriptionCreated =
+    helpers.maybeCreateSubscription(tagName, request.session.instagram_access_token)
+
+  helpers.getMedia tagName, (error, tagName, media) ->
+    response.render 'tv.jade',
+      tag: tagName
+      authed: authed
+      external_auth_url: external_auth_url
+
+app.get '/oauth/callback', (request, response) ->
+  settings.inst.oauth.ask_for_access_token
+    request: request
+    response: response
+    complete: (params, response) ->
+      helpers.debug params
+      request.session.instagram_access_token = params['access_token']
+      request.session.instagram_user = params['user']
+      response.redirect '/'
+    error: (errorMessage, errorObject, caller, response) ->
+

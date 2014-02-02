@@ -12,24 +12,78 @@ html
     script(src="/static/scripts/video.js", type="text/javascript")
 
     <!-- SEMANTIC UI -->
+    link(rel="stylesheet", href="/static/semantic/collections/grid.css", type="text/css")
     link(rel="stylesheet", href="/static/semantic/elements/icon.css", type="text/css")
 
     link(rel="stylesheet", href="/static/semantic/modules/video.css", type="text/css")
     script(src="/static/semantic/modules/video.js", type="text/javascript")
 
+    link(href="http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic", rel="stylesheet", type="text/css")
     script.
       var tag = "#{tag}";
     script(src="/static/scripts/master.js", type="text/javascript")
   body
-    #wrap
-      h1 into the #
-        input(type="text", value="static")
-        #cursor
-      .center
-        #video_box
-          <!-- #video_overlay -->
-          <!--   a -->
-          <!--     i.link.circular.inverted.empty.heart.basic.icon -->
-        .pane
-          .controls
-            a(onclick="playNextVideo", href="javascript:playNextVideo();") Skip
+    if !authed
+      #instagram-login
+        a(href="#{external_auth_url}")
+          img(src="/static/images/instagram-light.png")
+    .bgstripe
+    .ui.grid
+      .row
+        .one.wide.column
+        .four.wide.column.stripev
+          h1 into the
+          .ui.grid
+            .row
+              .eight.wide.column#trends
+                h2 Suggested
+                ul
+                  li <a href="/video"> #video</a>
+                  li <a href="/snow"> #snow</a>
+                  li <a href="/superbowl"> #superbowl</a>
+                  li <a href="/ukraine"> #ukraine</a>
+                  li <a href="/beyonce"> #beyonce</a>
+              .eight.wide.column#suggestions
+                h2 &nbsp;
+                ul
+                  li <a href="/dance"> #dance</a>
+                  li <a href="/magic"> #magic</a>
+                  li <a href="/slowmo"> #slowmo</a>
+                  li <a href="/football"> #football</a>
+                  li <a href="/touchdown"> #touchdown</a>
+            .row
+              hr
+            .row
+              .sixteen.wide.column
+                #details_wrap
+            .row
+              hr
+            .row
+              .sixteen.wide.column
+                p Into The Static is an experiment by <a href="http://twitter.com/marsh">@marsh</a>
+        .ten.wide.column
+          .row
+            h1 #
+              input(type="text", value="static")
+          .row
+            #video_box
+            .arrow-right
+        .one.wide.column
+    .rainbow
+      .stripe.yellow-bg
+      .stripe.orange-bg
+      .stripe.red-bg
+      .stripe.purple-bg
+      .stripe.dark-blue-bg
+      .stripe.red-bg
+      .stripe.orange-bg
+      .stripe.dark-blue-bg
+      .stripe.yellow-bg
+
+    <!-- .center -->
+    <!--     <!&#45;&#45; #video_overlay &#45;&#45;> -->
+    <!--     <!&#45;&#45;   a &#45;&#45;> -->
+    <!--     <!&#45;&#45;     i.link.circular.inverted.empty.heart.basic.icon &#45;&#45;> -->
+    <!--   .pane -->
+    <!--     .controls -->
+    <!--       a(onclick="playNextVideo", href="javascript:playNextVideo();") Skip -->

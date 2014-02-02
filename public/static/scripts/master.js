@@ -1,5 +1,5 @@
 var crt = new CRT();
-var socket = io.connect('http://localhost:3000');
+var socket = io.connect('http://9904515.ngrok.com');
 
 function enqueueVideo(v){
   video_data = {
@@ -11,6 +11,7 @@ function enqueueVideo(v){
     },
     'details' : {
       'username' : v.user.username,
+      'profile_picture' : v.user.profile_picture,
       'post' : v.caption,
       'location' : v.location
     }
@@ -67,9 +68,26 @@ function playNextVideo(){
   crt.playNext();
 }
 
+function enqueueVideosForTag(tagName){
+    $.ajax({
+      type: 'GET',
+      url: '/tag/' + tagName
+    }).done(function(data) {
+      data['videos'].forEach(function(v){
+        enqueueVideo(v);
+      });
+    });
+}
+
 $().ready(function() {
-  $('#wrap').tubular({videoId: 'bf7NbRFyg3Y', repeat: true});
   // setTimeout(introduction(), 2500);
+  $('input').attr('value', tag);
+
+  $('.arrow-right').click(playNextVideo);
+
+  if (tag){
+    enqueueVideosForTag(tag);
+  }
 
   $('input').bind("enterKey",function(e){
     var newTag = $(this)[0].value;
@@ -85,14 +103,7 @@ $().ready(function() {
     console.log('tag submitted: ' + newTag);
 
     // get backlog of videos to start playing
-    $.ajax({
-      type: 'GET',
-      url: '/tag/' + newTag
-    }).done(function(data) {
-      data['videos'].forEach(function(v){
-        enqueueVideo(v);
-      });
-    });
+    enqueueVideosForTag(tag);
   });
 
   $('input').keyup(function(e){
@@ -101,8 +112,7 @@ $().ready(function() {
     }
   });
 
-  $('#wrap .center #video_box').append(crt.$el_video);
-  $('#wrap .center .pane').prepend(crt.$el_details);
-  crt.fullscreen();
+  $('#video_box').append(crt.$el_video);
+  $('#details_wrap').append(crt.$el_details);
 });
 

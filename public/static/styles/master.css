@@ -1,30 +1,86 @@
 /* @override http://localhost:3000/static/styles/master.css */
 
+html, body {
+  height:100%;
+}
+
 body {
-	font-family: "Helvetica Neue", Helvetica;
+	font-family: "Roboto", Helvetica;
 	font-size: 100%;
-	background-color: #222;
+	background-color: #DAEDE2;
 }
 
-#wrap {
-	width: 1040px;
-	margin: 0 auto;
+.bgstripe {
+  background-color: #77C4D3;
+  height:100%;
+  z-index:-1;
+  position: fixed;
+  left: 6.25%;
+  width: 25%;
 }
 
-p {
+.rainbow {
+  display: block;
+  position:fixed;
+  top:30%;
+  width: 93.67%;
+  z-index:-2;
+}
+
+.rainbow .stripe {
+  height: 2.38em;
+}
+
+.yellow-bg {
+  width: 98.87%;
+  background-color: #333745;
+}
+.orange-bg {
+  width: 96.41%;
+  background-color: #F6F792;
+}
+.red-bg {
+  width: 97.91%;
+  background-color: #EA2E49;
+}
+.purple-bg {
+  width: 94.83%;
+  background-color: #333745;
+}
+.dark-blue-bg {
+  background-color: #AAD8B0;
+  color: white;
+}
+/* .blue-bg { */
+/*   background-color: #3dabe0; */
+/*   width: 97.33%; */
+/* } */
+
+p, li {
 	font-size: 1em;
 	line-height: 18px;
-	/* color:  #aaa; */
+  color:white;
 	font-weight: lighter;
 	margin-bottom: 8px;
 }
 
-#header { text-align: center; }
-
 h1 {
+  line-height: 1;
   font-size: 100px;
+  color: #333745;
+  margin-bottom: 25px;
+  margin-top: 25px;
+}
+
+hr {
+  border: 1;
   color: white;
-  text-align: center;
+  background-color: white;
+  border-style: solid;
+}
+
+#trends, #suggestions {
+  color: white;
 }
 
 .pane {
@@ -34,9 +90,17 @@ h1 {
   color: white;
 }
 .controls { float: right; width:40px; }
-.details { float: left; width:560px; }
+.details { color: white; }
+.profile_picture {
+  height: 80px;
+  width: 80px;
+  margin-right: 10px;
+  float: left;
+}
+.username {
+}
 .post {
-  white-space: nowrap;
+  /* white-space: nowrap; */
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -46,14 +110,42 @@ input {
   /* border-color: transparent; */
   background-color: transparent;
   font-size: 100px;
-  color: white;
-  width: 300px;
+  max-width: 570px;
+  color: #333745;
+}
+
+.arrow-right {
+  width: 0;
+  height: 0;
+  border-top: 60px solid transparent;
+  border-bottom: 60px solid transparent;
+  border-left: 80px solid #77C4D3;
+  float: left;
+  margin-top: 280px;
+  margin-left: 20px;
+  /* position:fixed; */
+  /* top:48%; */
+  /* right:10%; */
+}
+.arrow-right:hover {
+  border-left: 80px solid #333745;
+}
+
+#instagram-login {
+  position: fixed;
+  top: 20px;
+  right: 50px;
 }
 
 video {}
 
 #video_box {
   /* float: left; */
+  float: left;
+  width:640px;
+  height:640px;
+  background: black;
+  margin: 0;
 }
 
 #video_overlay {
@@ -82,8 +174,11 @@ h2 {
 }
 
 a {
-	color:  #eee;
+  color: #F6F792;
 	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
 }
 
 .cols {

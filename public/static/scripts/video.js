@@ -22,7 +22,9 @@ function createSourceElement(source) {
 
 CRT.prototype.updateDetails = function(){
   this.$el_details.html('');
-  this.$el_details.append('<p class="username">'+this.current.details.username+'</p>');
+  this.$el_details.append('<img class="profile_picture" src=' + this.current.details.profile_picture + '>');
+  this.$el_details.append('<p class="username"><a target="_blank" href="http://instagram.com/'
+      + this.current.details.username + '">' + this.current.details.username + '</p>');
   this.$el_details.append('<p class="post">'+this.current.details.post.text+'</p>');
   console.log(this.current.details.location);
 }
@@ -64,7 +66,8 @@ CRT.prototype.play = function(video_data) {
  *   details : {
  *     username : "",
  *     post : {},
- *     location : ""
+ *     location : "",
+ *     profile_picture : ""
  *   }
  * }
  */
