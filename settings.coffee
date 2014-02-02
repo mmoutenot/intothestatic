@@ -13,10 +13,11 @@ exports.io            = io
 exports.app           = app
 exports.appPort       = appPort
 exports.server        = server
+exports.HOST_NAME     = process.env.IG_HOSTNAME
 exports.CLIENT_ID     = process.env.IG_CLIENT_ID or 'CLIENT_ID'
 exports.CLIENT_SECRET = process.env.IG_CLIENT_SECRET or 'CLIENT_SECRET'
 exports.SUB_ENDPOINT  = 'https://api.instagram.com/v1/subscriptions'
-exports.SUB_CALLBACK  = process.env.IG_HOSTNAME + '/callbacks/tag/'
+exports.SUB_CALLBACK  = exports.HOSTNAME + '/callbacks/tag/'
 exports.httpClient    = ((if process.env.IG_USE_INSECURE then require('http') else require('https')))
 exports.REDIS_PORT    = process.env.IG_REDIS_PORT
 exports.REDIS_HOST    = process.env.IG_REDIS_HOST
@@ -28,7 +29,7 @@ app.set 'view engine', 'jade'
 Instagram = require 'instagram-node-lib'
 Instagram.set('client_id', exports.CLIENT_ID)
 Instagram.set('client_secret', exports.CLIENT_SECRET)
-Instagram.set('redirect_uri', 'http://9904515.ngrok.com/oauth/callback')
+Instagram.set('redirect_uri', settings.HOSTNAME + '/oauth/callback')
 exports.inst = Instagram
 
 RedisStore = require('connect-redis')(express)

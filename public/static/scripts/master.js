@@ -1,5 +1,5 @@
 var crt = new CRT();
-var socket = io.connect('http://9904515.ngrok.com');
+var socket = io.connect(settings.HOSTNAME);
 
 function enqueueVideo(v){
   video_data = {
