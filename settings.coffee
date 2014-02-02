@@ -2,7 +2,7 @@
 express = require 'express'
 app     = express()
 
-appPort = process.env.IG_APP_PORT or 3000
+appPort = process.env.PORT or 3000
 
 http   = require 'http'
 server = http.createServer(app).listen appPort
@@ -18,9 +18,6 @@ exports.CLIENT_SECRET = process.env.IG_CLIENT_SECRET or 'CLIENT_SECRET'
 exports.SUB_ENDPOINT  = 'https://api.instagram.com/v1/subscriptions'
 exports.SUB_CALLBACK  = 'http://9904515.ngrok.com/callbacks/tag/'
 exports.httpClient    = ((if process.env.IG_USE_INSECURE then require('http') else require('https')))
-exports.apiHost       = process.env.IG_API_HOST or 'api.instagram.com'
-exports.apiPort       = process.env.IG_API_PORT or null
-exports.basePath      = process.env.IG_BASE_PATH or ''
 exports.REDIS_PORT    = process.env.IG_REDIS_PORT
 exports.REDIS_HOST    = process.env.IG_REDIS_HOST
 exports.debug         = true
@@ -45,7 +42,7 @@ app.configure ->
       db: 2
       pass: ''
     )
-    secret: process.env.SESSION_SECRET or '1asdfkljh32rsadfa34'
+    secret: process.env.IG_SESSION_SECRET or '1asdfkljh32rsadfa34'
   )
 
   app.use express.methodOverride()
