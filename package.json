@@ -14,10 +14,11 @@
     "socket.io": "~0.9.16",
     "node-twitter": "~0.5.0",
     "connect-assets": "~2.5.3"
+    "coffee-script": "~1.7.1"
   },
   "devDependencies": {},
   "scripts": {
-    "start": "./node_modules/.bin/coffee server.coffee"
+    "start": "node_modules/.bin/coffee server.coffee"
   },
   "repository": {
     "type": "git",
