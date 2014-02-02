@@ -29,7 +29,7 @@ app.set 'view engine', 'jade'
 Instagram = require 'instagram-node-lib'
 Instagram.set('client_id', exports.CLIENT_ID)
 Instagram.set('client_secret', exports.CLIENT_SECRET)
-Instagram.set('redirect_uri', settings.HOSTNAME + '/oauth/callback')
+Instagram.set('redirect_uri', exports.HOSTNAME + '/oauth/callback')
 exports.inst = Instagram
 
 RedisStore = require('connect-redis')(express)
