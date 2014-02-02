@@ -21,8 +21,8 @@ exports.httpClient    = ((if process.env.IG_USE_INSECURE then require('http') el
 exports.apiHost       = process.env.IG_API_HOST or 'api.instagram.com'
 exports.apiPort       = process.env.IG_API_PORT or null
 exports.basePath      = process.env.IG_BASE_PATH or ''
-exports.REDIS_PORT    = 6486
-exports.REDIS_HOST    = '127.0.0.1'
+exports.REDIS_PORT    = process.env.IG_REDIS_PORT
+exports.REDIS_HOST    = process.env.IG_REDIS_HOST
 exports.debug         = true
 
 app.set 'view engine', 'jade'
