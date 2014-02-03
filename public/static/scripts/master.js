@@ -1,5 +1,5 @@
 var crt = new CRT();
-var socket = io.connect(window.location.hostname);
+var socket = io.connect('http://intothestatic.com');
 
 function enqueueVideo(v){
   video_data = {

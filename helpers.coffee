@@ -62,8 +62,7 @@ backfillTag = (tagName, num, maxID, access_token) ->
           backfillTag(tagName, num, pagination['next_max_id'], access_token)
 
       error : (errorMessage, errorObject, caller) ->
-        debug errorMessage
-        setMaxID tagName, ''
+        debug 'ERROR: ' + errorMessage
     )
 
 # Each update that comes from settings.inst merely tells us that there's new
@@ -78,6 +77,7 @@ processTag = (tagName) ->
 
       setMinID tagName, 'XXX'
 
+      debug 'ACCESS_TOKEN: ' + access_token
       settings.inst.tags.recent(
         name : tagName
         min_id : minID
