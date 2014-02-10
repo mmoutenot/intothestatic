@@ -29,59 +29,57 @@ maybeCreateSubscription = (tagName, instagram_access_token) ->
       debug 'subscription for ' + tagName + ' already exists'
       return
 
-    settings.inst.tags.subscribe(
+    params =
       object_id: tagName
-      access_token: instagram_access_token
       callback_url: settings.SUB_CALLBACK + tagName
       complete: (data, pagination) ->
         redisClient.sadd 'subscriptions', tagName
       error: (errorMessage, errorObject, caller) ->
-        debug errorMessage
-    )
+        debug 'maybeCreateSubscription: ' + errorMessage
 
-backfillTag = (tagName, num, maxID, access_token) ->
+    params = $.extend({}, params, access_token: instagram_access_token) if instagram_access_token
+    settings.inst.tags.subscribe params
+
+backfillTag = (tagName, num, maxID, instagram_access_token) ->
   redisClient.llen 'media:objects:' + tagName, (error, tagCount) ->
 
     debug 'TAG COUNT: ' + tagCount
     debug 'MAX ID: ' + maxID
     return if tagCount >= num
 
-    settings.inst.tags.recent(
+    params =
       name : tagName
       max_id : maxID
-      access_token : access_token
       complete : (data, pagination) ->
-
         videos = (media for media in data when media['type'] == 'video')
-
-        if videos.length > 0
-          redisClient.publish 'channel:' + tagName, JSON.stringify(videos)
+        redisClient.publish 'channel:' + tagName, JSON.stringify(videos) if videos.length > 0
 
         newTagCount = tagCount + videos.length
         if newTagCount < num && typeof maxID != 'undefined'
-          backfillTag(tagName, num, pagination['next_max_id'], access_token)
+          backfillTag(tagName, num, pagination['next_max_id'], instagram_access_token)
 
       error : (errorMessage, errorObject, caller) ->
-        debug 'ERROR: ' + errorMessage
-    )
+        debug 'backfillTag: ' + errorMessage
+
+    params = $.extend({}, params, access_token: instagram_access_token) if instagram_access_token
+    settings.inst.tags.recent params
 
 # Each update that comes from settings.inst merely tells us that there's new
 # data to go fetch. The update does not include the data. So, we take the
 # tag ID from the update, and make the call to the API.
 processTag = (tagName) ->
   getMinID tagName, (error, minID) ->
-    getRandAccessToken tagName, (error, access_token) ->
+    getRandAccessToken tagName, (error, instagram_access_token) ->
       if minID == "XXX"
         debug 'Request for ' + tagName + ' already in progress'
         return
 
       setMinID tagName, 'XXX'
 
-      debug 'ACCESS_TOKEN: ' + access_token
-      settings.inst.tags.recent(
+      debug 'ACCESS_TOKEN: ' + instagram_access_token
+      params =
         name : tagName
         min_id : minID
-        access_token : access_token
         complete : (data, pagination) ->
           setMinID tagName, pagination['min_tag_id']
           recentVideos = (media for media in data when media['type'] == 'video')
@@ -89,8 +87,10 @@ processTag = (tagName) ->
             redisClient.publish 'channel:' + tagName, JSON.stringify(recentVideos)
         error : (errorMessage, errorObject, caller) ->
           setMinID tagName, ''
-          debug errorMessage
-      )
+          debug 'processTag: ' + errorMessage
+
+      params = $.extend({}, params, access_token: instagram_access_token) if instagram_access_token
+      settings.inst.tags.recent params
 
 getMedia = (tagName, callback) ->
   # This function gets the most recent media stored in redis
@@ -99,9 +99,9 @@ getMedia = (tagName, callback) ->
 
     # if there are no existing videos, let's backfill a dozen to start playing
     if media.length == 0
-      getRandAccessToken tagName, (error, access_token) ->
+      getRandAccessToken tagName, (error, instagram_access_token) ->
         debug 'Backfilling tag: ' + tagName
-        backfillTag tagName, 15, '', access_token
+        backfillTag tagName, 15, '', instagram_access_token
 
     # Parse each media JSON to send to callback
     media = media.map((json) ->

@@ -9,14 +9,15 @@ io            = require 'socket.io'
 
 app = settings.app
 app.get '/callbacks/tag/:tagName', (request, response) ->
-  # The GET callback for each subscription verification.
   helpers.debug 'GET ' + request.url
+
+  # The GET callback for each subscription verification.
   params = url.parse(request.url, true).query
   response.send params['hub.challenge'] or 'No hub.challenge present'
 
 app.post '/callbacks/tag/:tagName', (request, response) ->
   tagName = request.params.tagName
-  helpers.debug 'PUT /callbacks/tag/' + tagName
+  helpers.debug 'POST /callbacks/tag/' + tagName
 
   # The POST callback for Instagram to call every time there's an update
   # to one of our subscriptions.
@@ -39,13 +40,15 @@ app.post '/callbacks/tag/:tagName', (request, response) ->
 
 # Render the home page
 app.get '/', (request, response) ->
+  helpers.debug 'GET /'
+
   tagName = 'static'
   external_auth_url = settings.inst.oauth.authorization_url(
     scope: 'basic'
     display: 'touch'
   )
   authed = typeof request.session.instagram_access_token != 'undefined'
-  helpers.debug request.session.access_token
+  helpers.debug request.session.instagram_access_token
   response.render 'tv.jade',
     tag: tagName,
     authed: authed
@@ -53,6 +56,8 @@ app.get '/', (request, response) ->
 
 app.get '/tag/:tagName', (request, response) ->
   tagName = request.params.tagName
+  helpers.debug 'GET /tag/' + tagName
+
   subscriptionCreated =
     helpers.maybeCreateSubscription(tagName, request.session.instagram_access_token)
   helpers.getMedia tagName, (error, tagName, media) ->
@@ -61,15 +66,16 @@ app.get '/tag/:tagName', (request, response) ->
       videos: media
     )
 
-app.get '/:tagName', (request, response) ->
+app.get '/channel/:tagName', (request, response) ->
   tagName = request.params.tagName
+  helpers.debug 'GET /' + tagName
 
   external_auth_url = settings.inst.oauth.authorization_url(
     scope: 'basic'
     display: 'touch'
   )
   authed = typeof request.session.instagram_access_token != 'undefined'
-  helpers.debug request.session.access_token
+  helpers.debug request.session.instagram_access_token
 
   subscriptionCreated =
     helpers.maybeCreateSubscription(tagName, request.session.instagram_access_token)
@@ -81,6 +87,8 @@ app.get '/:tagName', (request, response) ->
       external_auth_url: external_auth_url
 
 app.get '/oauth/callback', (request, response) ->
+  helpers.debug 'GET /oauth/callback'
+
   settings.inst.oauth.ask_for_access_token
     request: request
     response: response

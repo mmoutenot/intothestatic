@@ -50,6 +50,7 @@ app.configure ->
   app.use express.bodyParser()
   app.use app.router
   app.use express.static(__dirname + '/public/')
+  app.use express.favicon('public/static/images/favicon.ico')
 
   ig.use(client_id: exports.CLIENT_ID, client_secret: exports.CLIENT_SECRET)
 
