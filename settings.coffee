@@ -2,7 +2,7 @@
 express = require 'express'
 app     = express()
 
-appPort = process.env.PORT or 3000
+appPort = process.env.PORT or 80
 
 http   = require 'http'
 server = http.createServer(app).listen appPort
@@ -19,7 +19,7 @@ exports.CLIENT_SECRET = process.env.IG_CLIENT_SECRET or 'CLIENT_SECRET'
 exports.SUB_ENDPOINT  = 'https://api.instagram.com/v1/subscriptions'
 exports.SUB_CALLBACK  = exports.HOSTNAME + '/callbacks/tag/'
 exports.httpClient    = ((if process.env.IG_USE_INSECURE then require('http') else require('https')))
-exports.REDIS_PORT    = process.env.IG_REDIS_PORT
+exports.REDIS_PORT    = process.env.IG_REDIS_PORT || 6379
 exports.REDIS_HOST    = process.env.IG_REDIS_HOST
 exports.debug         = true
 
