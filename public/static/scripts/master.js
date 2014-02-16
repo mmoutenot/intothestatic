@@ -1,5 +1,5 @@
 var crt = new CRT();
-var socket = io.connect(window.location.hostname);
+var socket = io.connect(location.host);
 
 function enqueueVideo(v){
   video_data = {

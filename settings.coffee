@@ -2,7 +2,7 @@
 express = require 'express'
 app     = express()
 
-appPort = process.env.PORT or 80
+appPort = process.env.PORT or 3000
 
 http   = require 'http'
 server = http.createServer(app).listen appPort
