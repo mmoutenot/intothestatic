@@ -34,6 +34,8 @@ exports.inst = Instagram
 
 RedisStore = require('connect-redis')(express)
 
+console.log 'running on ' + exports.HOSTNAME
+
 app.configure ->
   app.use express.cookieParser()
   app.use express.session(
