@@ -49,6 +49,7 @@ app.get '/', (request, response) ->
   )
   authed = typeof request.session.instagram_access_token != 'undefined'
   helpers.debug request.session.instagram_access_token
+  # helpers.getCurrentSubscriptions
   response.render 'tv.jade',
     tag: tagName,
     authed: authed
