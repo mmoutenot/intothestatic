@@ -1,0 +1,241 @@
+/* @override http://localhost:3000/static/styles/master.css */
+
+// includes 
+@import "bourbon/bourbon";
+
+// vars
+$grey: #dadada;
+$bluedark: #32383E;
+$tvblue: #070936;
+$tvtan: #5A4947;
+$white:#fff;
+$orange: #FD4B46;
+$orangedark: darken($orange, 15%);
+
+$font-main: "Roboto", Avenir, Helvetica;
+
+html, body {
+  height:100%;
+}
+
+body {
+	font-family: $font-main;
+	font-size: 100%;
+	background-color: $bluedark;
+}
+
+#title-row {
+  padding:30px 0;
+  margin: 0;
+  color:$grey;
+  @include clearfix;
+
+  h1 {
+    text-align: center;
+    font-weight: 100;  
+    font-size: 4em;
+    margin:0;
+    text-shadow: 4px 2px darken($bluedark, 10%);
+    text-transform: uppercase;
+    float:left;
+    padding-top: 10px;
+  }
+  
+  #input-box {
+    position: relative;
+    display: block;
+    float:left;
+    margin-left: 20px;
+    @include clearfix;
+    width:60%;
+    padding-top: 10px;
+
+    #hashtag {
+      color:$orange;
+      text-shadow:none;
+      font-size: 4em;
+      font-weight: 100;
+      float:left;
+      display: inline-block;
+      position: absolute;
+      left: 0;
+    }
+    
+    #editable {
+      font-size: 4em;
+      width:100%;
+      max-width:700px;
+      height:1em;
+      background:$bluedark;
+      border-bottom: 1px dotted $orange;
+      display: block;
+      float:left;
+      outline:none;
+      font-weight: 100;
+      color:$orange;
+      overflow:hidden;
+      padding-bottom: 10px;
+      padding-left: .6em;
+    }
+  }
+
+  #instagram {
+    border:1px solid darken($bluedark, 10%);
+    text-align: center;
+    font-weight: 100;
+    text-decoration: none;
+    min-width:180px;
+    width:100%;
+    color:$grey;
+    padding:.8em .8em;
+    border-radius: 4px;
+    display: block;
+    
+    @include transition(all .05s ease-in-out);
+
+    &:hover { 
+      background:#517fa4;
+      color:$white;
+      box-shadow:0 0 10px darken($bluedark, 10%);
+    }
+  }
+}
+
+#video-row {
+  padding: 10px 0 0 0;
+  margin: 0;
+  position:relative;
+  @include clearfix;
+  
+
+  #middle {
+    position:relative;
+  }
+
+  #video_box { 
+    display: block;
+    position:absolute;
+    height:80%;
+    width:60%;
+    left:10%;
+    top:10%;  
+
+    background:$orange;
+    opacity: .1;
+  }
+
+  #tv {
+    border-radius: 10px;
+    box-shadow: 0 0 10px darken($bluedark, 20%);
+    z-index:3;
+    position: relative;
+  }
+
+  #info-box {
+    position:absolute;
+    right:5.4%;
+    top:3.6%;
+    width:20%;
+    height:57%;
+    z-index:5;
+    
+    -webkit-content-box: border-box;
+    -moz-content-box: border-box;
+    content-box: border-box;
+    
+    #next {
+      width:90%;
+      display: block;
+      margin: 0 auto;
+      text-align: center;
+      background:$orange;
+      color:$white;
+      text-decoration: none;
+      padding:2%;
+      margin-top:.2em;
+      font-weight: 300;
+      height:3em;
+      line-height: 3em;
+      font-size: 2em;
+      border-radius: 8px;
+      text-transform: uppercase;
+      
+      @include box-shadow(0px 6px 0px $orangedark);
+      @include transition(all .04s ease-in-out);
+
+      &:hover {
+        line-height: 3.2em;
+        background:lighten($orange, 4%);
+        @include box-shadow(0px 6px 0px lighten($orange, 4%));
+      }
+    }
+  }
+}
+
+#footer {
+  position:fixed;
+  bottom:0;
+  width:100%;
+  left:0;
+  right:0;
+  height:40px;
+  background:darken($bluedark, 10%);
+  color:$grey;
+  margin: 0;
+  padding: 10px 0;
+  z-index:4;
+  font-weight: 100;
+
+  h4 {
+    text-align: right;
+    line-height: 40px;
+    margin: 0;
+    padding: 0;
+  }
+
+  a {
+    color:$orange;
+    text-decoration: none;
+    border-bottom: 1px dotted $orange;
+    
+
+    &:hover {
+      color:lighten($orange, 10%);  
+    }
+  }
+}
+
+@media only screen and (max-width: 1280px) {
+  #title-row {
+
+    h1 {
+      font-size: 3em;
+      text-align: center;
+      float: none;
+      margin-bottom: .3em;
+    }
+
+    #instagram {
+      position:absolute;
+      font-size: .8em;
+      top:10px;
+      right:10px;
+      width:180px;
+    }
+
+    #input-box {
+      margin: 0 auto;
+      float: none;
+      width:50%;
+
+      #hashtag {
+        font-size: 3em;
+      }
+
+      #editable {
+        width:100%;
+        font-size: 3em;
+      }
+    }
+  } 
+}
