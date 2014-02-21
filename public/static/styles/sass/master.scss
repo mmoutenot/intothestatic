@@ -36,6 +36,12 @@ body {
   color:$grey;
   @include clearfix;
 
+  .eight {
+    position: relative;
+  }
+
+  $h1-width: 277px;
+
   h1 {
     text-align: center;
     font-weight: 100;
@@ -44,17 +50,18 @@ body {
     text-shadow: 4px 2px darken($bluedark, 10%);
     text-transform: uppercase;
     float:left;
-    padding-top: 10px;
+    padding-top: 14px;
     display: block;
   }
 
   #input-box {
-    width:60%;
-    float:left;
     display: block;
     font-weight: 100;
-    margin-left: 20px;
-    position: relative;
+    position: absolute;
+    width:-webkit-calc( 100% - 310px );
+    width:calc( 100% - 310px );
+    left:310px;
+    
 
     #hashtag {
       font-size: 4em;
@@ -63,6 +70,7 @@ body {
       position: absolute;
       left:0;
       top:.24em;
+      z-index:9;
     }
 
     #search {
@@ -77,7 +85,8 @@ body {
       font-size: 4em;
       display: inline-block;
       float:left;
-      width:90%;
+      width:-webkit-calc( 100% - 1em );
+      width:calc( 100% - 1em );
       font-weight: 100;
       padding: 0 0 0 .6em;
       margin-top: .05em;
@@ -270,9 +279,13 @@ body {
       width:60%;
       margin: 0 auto;
       float:none;
-
+      position: relative;
+      left:auto;
+    
       #search {
         width:100%;
+        position: relative;
+        margin: 0 auto;
         -webkit-box-style:border-box;
         -moz-box-style:border-box;
         box-style:border-box;

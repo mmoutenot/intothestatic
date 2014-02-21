@@ -21,6 +21,8 @@ body {
     display: table; }
   #title-row:after {
     clear: both; }
+  #title-row .eight {
+    position: relative; }
   #title-row h1 {
     text-align: center;
     font-weight: 100;
@@ -29,22 +31,23 @@ body {
     text-shadow: 4px 2px #1b1e22;
     text-transform: uppercase;
     float: left;
-    padding-top: 10px;
+    padding-top: 14px;
     display: block; }
   #title-row #input-box {
-    width: 60%;
-    float: left;
     display: block;
     font-weight: 100;
-    margin-left: 20px;
-    position: relative; }
+    position: absolute;
+    width: -webkit-calc(100% - 310px );
+    width: calc(100% - 310px );
+    left: 310px; }
     #title-row #input-box #hashtag {
       font-size: 4em;
       color: #fd4b46;
       display: block;
       position: absolute;
       left: 0;
-      top: .24em; }
+      top: .24em;
+      z-index: 9; }
     #title-row #input-box #search {
       background: #32383e;
       border: none;
@@ -55,7 +58,8 @@ body {
       font-size: 4em;
       display: inline-block;
       float: left;
-      width: 90%;
+      width: -webkit-calc(100% - 1em );
+      width: calc(100% - 1em );
       font-weight: 100;
       padding: 0 0 0 .6em;
       margin-top: .05em;
@@ -205,9 +209,13 @@ body {
   #title-row #input-box {
     width: 60%;
     margin: 0 auto;
-    float: none; }
+    float: none;
+    position: relative;
+    left: auto; }
     #title-row #input-box #search {
       width: 100%;
+      position: relative;
+      margin: 0 auto;
       -webkit-box-style: border-box;
       -moz-box-style: border-box;
       box-style: border-box; }
