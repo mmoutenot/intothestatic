@@ -115,6 +115,6 @@ $().ready(function() {
   });
 
   $('#video_box').append(crt.$el_video);
-  $('#details_wrap').append(crt.$el_details);
+  $('#info-box').prepend(crt.$el_details);
 });
 

@@ -3,7 +3,7 @@ var CRT = function(videos) {
   this.$el_video = $('<video width="640px" height="640px"></video>');
   this.el_video = this.$el_video[0];
 
-  this.$el_details = $('<div class="details"></div>');
+  this.$el_details = $('<div id="user-info"></div>');
   this.el_details = this.$el_details[0];
 
   this.current = null;
@@ -22,8 +22,8 @@ function createSourceElement(source) {
 
 CRT.prototype.updateDetails = function(){
   this.$el_details.html('');
-  this.$el_details.append('<img class="profile_picture" src=' + this.current.details.profile_picture + '>');
-  this.$el_details.append('<p class="username"><a target="_blank" href="http://instagram.com/'
+  this.$el_details.append('<img class="profile-picture" src=' + this.current.details.profile_picture + '>');
+  this.$el_details.append('<h4 class="username"><a target="_blank" href="http://instagram.com/'
       + this.current.details.username + '">' + this.current.details.username + '</p>');
   this.$el_details.append('<p class="post">'+this.current.details.post.text+'</p>');
   console.log(this.current.details.location);

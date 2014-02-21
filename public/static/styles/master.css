@@ -122,18 +122,26 @@ body {
       -moz-content-box: border-box;
       content-box: border-box;
       color: #32383e;
-      padding-top: .3em; }
-      #video-row #info-box #user-info img {
-        width: 90%;
+      padding-top: .3em;
+      overflow: hidden;
+      height: 60%; }
+      #video-row #info-box #user-info .profile-picture {
+        width: 80px;
+        border-radius: 40px;
+        -webkit-border-radius: 40px;
+        -moz-border-radius: 40px;
         height: auto;
         display: block;
         margin: 0 auto; }
-      #video-row #info-box #user-info h4 {
-        text-transform: uppercase;
+      #video-row #info-box #user-info .username {
         text-align: center;
-        color: #32383e;
         margin: 0.3em 0; }
-      #video-row #info-box #user-info p {
+        #video-row #info-box #user-info .username a {
+          color: #fd4b46;
+          text-decoration: none; }
+          #video-row #info-box #user-info .username a:hover {
+            color: #fe7c78; }
+      #video-row #info-box #user-info .post {
         line-height: 1.3em;
         width: 90%;
         margin: .5em auto;
