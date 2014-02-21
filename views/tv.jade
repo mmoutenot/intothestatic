@@ -31,8 +31,8 @@ html
         .ten.wide.column
           h1 Into the
           #input-box
-            label#hashtag #
-            #editable(contenteditable="true", data-maxlength="3", spellcheck="false")
+            span#hashtag #
+            input(type="text")#search
 
         .two.wide.column
           if !authed

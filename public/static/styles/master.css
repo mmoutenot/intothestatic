@@ -7,6 +7,10 @@ body {
   font-size: 100%;
   background-color: #32383e; }
 
+*::selection {
+  color: white;
+  background: #fd4b46; }
+
 #title-row {
   padding: 30px 0;
   margin: 0;
@@ -25,44 +29,37 @@ body {
     text-shadow: 4px 2px #1b1e22;
     text-transform: uppercase;
     float: left;
-    padding-top: 10px; }
+    padding-top: 10px;
+    display: block; }
   #title-row #input-box {
-    position: relative;
-    display: block;
-    float: left;
-    margin-left: 20px;
-    *zoom: 1;
     width: 60%;
-    padding-top: 10px; }
-    #title-row #input-box:before, #title-row #input-box:after {
-      content: " ";
-      display: table; }
-    #title-row #input-box:after {
-      clear: both; }
+    float: left;
+    display: block;
+    font-weight: 100;
+    margin-left: 20px;
+    position: relative; }
     #title-row #input-box #hashtag {
+      font-size: 4em;
       color: #fd4b46;
-      text-shadow: none;
-      font-size: 4em;
-      font-weight: 100;
-      float: left;
-      display: inline-block;
-      position: absolute;
-      left: 0; }
-    #title-row #input-box #editable {
-      font-size: 4em;
-      width: 100%;
-      max-width: 700px;
-      height: 1em;
-      background: #32383e;
-      border-bottom: 1px dotted #fd4b46;
       display: block;
-      float: left;
+      position: absolute;
+      left: 0;
+      top: .24em; }
+    #title-row #input-box #search {
+      background: #32383e;
+      border: none;
       outline: none;
-      font-weight: 100;
+      box-shadow: none;
       color: #fd4b46;
-      overflow: hidden;
-      padding-bottom: 10px;
-      padding-left: .6em; }
+      font-family: "Roboto", Avenir, Helvetica;
+      font-size: 4em;
+      display: inline-block;
+      float: left;
+      width: 90%;
+      font-weight: 100;
+      padding: 0 0 0 .6em;
+      margin-top: .05em;
+      border-bottom: 1px dotted #fd4b46; }
   #title-row #instagram {
     border: 1px solid #1b1e22;
     text-align: center;
@@ -179,11 +176,11 @@ body {
     right: 10px;
     width: 180px; }
   #title-row #input-box {
+    width: 60%;
     margin: 0 auto;
-    float: none;
-    width: 50%; }
-    #title-row #input-box #hashtag {
-      font-size: 3em; }
-    #title-row #input-box #editable {
+    float: none; }
+    #title-row #input-box #search {
       width: 100%;
-      font-size: 3em; } }
+      -webkit-box-style: border-box;
+      -moz-box-style: border-box;
+      box-style: border-box; } }
