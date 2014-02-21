@@ -25,7 +25,9 @@ CRT.prototype.updateDetails = function(){
   this.$el_details.append('<img class="profile-picture" src=' + this.current.details.profile_picture + '>');
   this.$el_details.append('<h4 class="username"><a target="_blank" href="http://instagram.com/'
       + this.current.details.username + '">' + this.current.details.username + '</p>');
-  this.$el_details.append('<p class="post">'+this.current.details.post.text+'</p>');
+  if (this.current.details.post) {
+    this.$el_details.append('<p class="post">'+this.current.details.post.text+'</p>');
+  }
   console.log(this.current.details.location);
 }
 
