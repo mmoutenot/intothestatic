@@ -1,6 +1,6 @@
 /* @override http://localhost:3000/static/styles/master.css */
 
-// includes 
+// includes
 @import "bourbon/bourbon";
 
 // vars
@@ -38,16 +38,16 @@ body {
 
   h1 {
     text-align: center;
-    font-weight: 100;  
+    font-weight: 100;
     font-size: 4em;
     margin:0;
     text-shadow: 4px 2px darken($bluedark, 10%);
     text-transform: uppercase;
     float:left;
     padding-top: 10px;
-    display: block;    
+    display: block;
   }
-  
+
   #input-box {
     width:60%;
     float:left;
@@ -69,9 +69,9 @@ body {
       // resets
       background:$bluedark;
       border:none; // border reset
-      outline:none; 
+      outline:none;
       box-shadow:none;
-      color:$orange;    
+      color:$orange;
       font-family: $font-main;
 
       font-size: 4em;
@@ -97,10 +97,10 @@ body {
     padding:.8em .8em;
     border-radius: 4px;
     display: block;
-    
+
     @include transition(all .05s ease-in-out);
 
-    &:hover { 
+    &:hover {
       background:#517fa4;
       color:$white;
       box-shadow:0 0 10px darken($bluedark, 10%);
@@ -113,19 +113,24 @@ body {
   margin: 0;
   position:relative;
   @include clearfix;
-  
+
 
   #middle {
     position:relative;
   }
 
-  #video_box { 
+  #video_box {
     display: block;
     position:absolute;
     height:80%;
     width:60%;
     left:10%;
-    top:10%;  
+    top:10%;
+
+    video {
+      height: 100%;
+      width: 100%;
+    }
   }
 
   #tv {
@@ -142,11 +147,11 @@ body {
     width:20%;
     height:57%;
     z-index:5;
-    
+
     -webkit-content-box: border-box;
     -moz-content-box: border-box;
     content-box: border-box;
-    
+
     #next {
       width:90%;
       display: block;
@@ -163,7 +168,7 @@ body {
       font-size: 2em;
       border-radius: 8px;
       text-transform: uppercase;
-      
+
       @include box-shadow(0px 6px 0px $orangedark);
       @include transition(all .04s ease-in-out);
 
@@ -201,10 +206,10 @@ body {
     color:$orange;
     text-decoration: none;
     border-bottom: 1px dotted $orange;
-    
+
 
     &:hover {
-      color:lighten($orange, 10%);  
+      color:lighten($orange, 10%);
     }
   }
 }
@@ -240,5 +245,5 @@ body {
       }
     }
 
-  } 
+  }
 }

@@ -42,7 +42,7 @@ app.post '/callbacks/tag/:tagName', (request, response) ->
 app.get '/', (request, response) ->
   helpers.debug 'GET /'
 
-  tagName = 'static'
+  tagName = 'video'
   external_auth_url = settings.inst.oauth.authorization_url(
     scope: 'basic'
     display: 'touch'

@@ -98,6 +98,9 @@ body {
     width: 60%;
     left: 10%;
     top: 10%; }
+    #video-row #video_box video {
+      height: 100%;
+      width: 100%; }
   #video-row #tv {
     border-radius: 10px;
     box-shadow: 0 0 10px #040506;
