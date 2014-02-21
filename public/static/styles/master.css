@@ -100,9 +100,7 @@ body {
     height: 80%;
     width: 60%;
     left: 10%;
-    top: 10%;
-    background: #fd4b46;
-    opacity: .1; }
+    top: 10%; }
   #video-row #tv {
     border-radius: 10px;
     box-shadow: 0 0 10px #040506;
