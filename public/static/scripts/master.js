@@ -88,6 +88,7 @@ $().ready(function() {
 
   if (tag){
     enqueueVideosForTag(tag);
+    createSocketListener(tag);
   }
 
   $('input').bind("enterKey",function(e){
