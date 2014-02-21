@@ -104,7 +104,7 @@ getMedia = (tagName, callback) ->
     if media.length == 0
       getRandAccessToken tagName, (error, instagram_access_token) ->
         debug 'Backfilling tag: ' + tagName
-        backfillTag tagName, 15, '', instagram_access_token
+        backfillTag tagName, 30, '', instagram_access_token
 
     # Parse each media JSON to send to callback
     media = media.map((json) ->

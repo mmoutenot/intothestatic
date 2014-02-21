@@ -84,7 +84,7 @@ $().ready(function() {
   // setTimeout(introduction(), 2500);
   $('input').attr('value', tag);
 
-  $('.arrow-right').click(playNextVideo);
+  $('a#next').click(playNextVideo);
 
   if (tag){
     enqueueVideosForTag(tag);
