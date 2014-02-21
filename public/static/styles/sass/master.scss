@@ -24,6 +24,12 @@ body {
 	background-color: $bluedark;
 }
 
+*::selection {
+  color:$white;
+  background:$orange;
+}
+
+
 #title-row {
   padding:30px 0;
   margin: 0;
@@ -39,44 +45,45 @@ body {
     text-transform: uppercase;
     float:left;
     padding-top: 10px;
+    display: block;    
   }
   
   #input-box {
-    position: relative;
-    display: block;
-    float:left;
-    margin-left: 20px;
-    @include clearfix;
     width:60%;
-    padding-top: 10px;
+    float:left;
+    display: block;
+    font-weight: 100;
+    margin-left: 20px;
+    position: relative;
 
     #hashtag {
+      font-size: 4em;
       color:$orange;
-      text-shadow:none;
-      font-size: 4em;
-      font-weight: 100;
-      float:left;
-      display: inline-block;
-      position: absolute;
-      left: 0;
-    }
-    
-    #editable {
-      font-size: 4em;
-      width:100%;
-      max-width:700px;
-      height:1em;
-      background:$bluedark;
-      border-bottom: 1px dotted $orange;
       display: block;
-      float:left;
-      outline:none;
-      font-weight: 100;
-      color:$orange;
-      overflow:hidden;
-      padding-bottom: 10px;
-      padding-left: .6em;
+      position: absolute;
+      left:0;
+      top:.24em;
     }
+
+    #search {
+      // resets
+      background:$bluedark;
+      border:none; // border reset
+      outline:none; 
+      box-shadow:none;
+      color:$orange;    
+      font-family: $font-main;
+
+      font-size: 4em;
+      display: inline-block;
+      float:left;
+      width:90%;
+      font-weight: 100;
+      padding: 0 0 0 .6em;
+      margin-top: .05em;
+      border-bottom: 1px dotted $orange;
+    }
+
   }
 
   #instagram {
@@ -221,18 +228,17 @@ body {
     }
 
     #input-box {
+      width:60%;
       margin: 0 auto;
-      float: none;
-      width:50%;
+      float:none;
 
-      #hashtag {
-        font-size: 3em;
-      }
-
-      #editable {
+      #search {
         width:100%;
-        font-size: 3em;
+        -webkit-box-style:border-box;
+        -moz-box-style:border-box;
+        box-style:border-box;
       }
     }
+
   } 
 }
