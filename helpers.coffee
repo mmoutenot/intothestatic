@@ -1,5 +1,6 @@
 settings = require './settings'
 request = require 'request'
+extend = require('node.extend')
 
 isValidRequest = (request) ->
   # First, let's verify the payload's integrity by making sure it's
@@ -20,6 +21,7 @@ debug = (msg) ->
   console.log msg  if settings.debug
 
 maybeCreateSubscription = (tagName, instagram_access_token) ->
+  debug 'in maybeCreateSubscription, access_token: ' + instagram_access_token
   if instagram_access_token
     redisClient.sadd 'tokens:' + tagName, instagram_access_token
   subscription_exists = false
@@ -37,7 +39,7 @@ maybeCreateSubscription = (tagName, instagram_access_token) ->
       error: (errorMessage, errorObject, caller) ->
         debug 'maybeCreateSubscription: ' + errorMessage
 
-    params = $.extend({}, params, access_token: instagram_access_token) if instagram_access_token
+    params = extend({}, params, access_token: instagram_access_token) if instagram_access_token
     settings.inst.tags.subscribe params
 
 backfillTag = (tagName, num, maxID, instagram_access_token) ->
@@ -61,13 +63,14 @@ backfillTag = (tagName, num, maxID, instagram_access_token) ->
       error : (errorMessage, errorObject, caller) ->
         debug 'backfillTag: ' + errorMessage
 
-    params = $.extend({}, params, access_token: instagram_access_token) if instagram_access_token
+    params = extend({}, params, access_token: instagram_access_token) if instagram_access_token
     settings.inst.tags.recent params
 
 # Each update that comes from settings.inst merely tells us that there's new
 # data to go fetch. The update does not include the data. So, we take the
 # tag ID from the update, and make the call to the API.
 processTag = (tagName) ->
+  debug 'Processing tag: ' + tagName
   getMinID tagName, (error, minID) ->
     getRandAccessToken tagName, (error, instagram_access_token) ->
       if minID == "XXX"
@@ -89,7 +92,7 @@ processTag = (tagName) ->
           setMinID tagName, ''
           debug 'processTag: ' + errorMessage
 
-      params = $.extend({}, params, access_token: instagram_access_token) if instagram_access_token
+      params = extend({}, params, access_token: instagram_access_token) if instagram_access_token
       settings.inst.tags.recent params
 
 getMedia = (tagName, callback) ->
@@ -101,7 +104,7 @@ getMedia = (tagName, callback) ->
     if media.length == 0
       getRandAccessToken tagName, (error, instagram_access_token) ->
         debug 'Backfilling tag: ' + tagName
-        backfillTag tagName, 15, '', instagram_access_token
+        backfillTag tagName, 30, '', instagram_access_token
 
     # Parse each media JSON to send to callback
     media = media.map((json) ->
@@ -134,6 +137,12 @@ setMinID = (tagName, min_tag_id) ->
 
 getRandAccessToken = (tagName, callback) ->
   redisClient.srandmember 'tokens:' + tagName, callback
+
+getCurrentSubscriptions = (callback) ->
+  subscriptions = redisClient.lrange 'subscriptions', 0, -1, (error, media) ->
+    helpers.debug subscriptions
+    callback error, tagName, media
+
 
 ########################################
 # Requires and Exports
