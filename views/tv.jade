@@ -27,13 +27,14 @@ html
 
     .ui.grid
       .row#title-row
-        .three.wide.column
-        .ten.wide.column
+        .four.wide.column
+        .eight.wide.column
           h1 Into the
           #input-box
             span#hashtag #
             input(type="text")#search
 
+        .one.wide.column
         .two.wide.column
           if !authed
             a(href="#{external_auth_url}")#instagram Sign in with Instagram
