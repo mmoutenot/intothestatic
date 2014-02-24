@@ -1,6 +1,11 @@
-settings = require './settings'
+crypto = require 'crypto'
 request = require 'request'
-extend = require('node.extend')
+extend = require 'node.extend'
+
+# models
+Video = require './models/video'
+
+settings = require './settings'
 
 isValidRequest = (request) ->
   # First, let's verify the payload's integrity by making sure it's
@@ -85,9 +90,10 @@ processTag = (tagName) ->
         min_id : minID
         complete : (data, pagination) ->
           setMinID tagName, pagination['min_tag_id']
-          recentVideos = (media for media in data when media['type'] == 'video')
-          if recentVideos.length > 0
-            redisClient.publish 'channel:' + tagName, JSON.stringify(recentVideos)
+          recentMedia = (media for media in data when media['type'] == 'video')
+          if recentMedia.length > 0
+            redisClient.publish 'channel:' + tagName, JSON.stringify(recentMedia)
+            console.log (saveMedia media) for media in recentMedia
         error : (errorMessage, errorObject, caller) ->
           setMinID tagName, ''
           debug 'processTag: ' + errorMessage
@@ -111,6 +117,36 @@ getMedia = (tagName, callback) ->
       JSON.parse json
     )
     callback error, tagName, media
+
+saveMedia = (media) ->
+  videoData =
+    instagram_id: media['id']
+    external_created_at: media['created_time']
+    user:
+      profile_picture: media['user']['profile_picture']
+      username: media['user']['username']
+      full_name: media['user']['full_name']
+    preview: media['images']['standard_resolution']
+    sources:
+      hi: media['videos']['standard_resolution']
+      lo: media['videos']['low_resolution']
+
+  videoData = extend({}, videoData,
+    caption: media['caption']['text']
+  ) if media['caption']
+
+  videoData = extend({}, videoData,
+    location:
+      latitude: media['location']['latitude']
+      longitude: media['location']['longitude']
+      name: media['location']['name']
+  ) if media['location']
+
+  video = new Video videoData
+  video.save (err, video) ->
+    return console.error 'error saving video: ' + err if err
+
+  return video
 
 # In order to only ask for the most recent media, we store the MAXIMUM ID
 # of the media for every tag we've fetched. This way, when we get an
@@ -147,10 +183,7 @@ getCurrentSubscriptions = (callback) ->
 ########################################
 # Requires and Exports
 ########################################
-redis    = require('redis')
-settings = require('./settings')
-crypto   = require('crypto')
-
+redis = require 'redis'
 redisClient = redis.createClient(settings.REDIS_PORT, settings.REDIS_HOST)
 
 exports.isValidRequest          = isValidRequest
