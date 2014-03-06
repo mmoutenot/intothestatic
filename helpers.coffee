@@ -4,6 +4,7 @@ extend = require 'node.extend'
 
 # models
 Video = require './models/video'
+ObjectId = require('mongoose').Types.ObjectId
 
 settings = require './settings'
 
@@ -47,78 +48,94 @@ maybeCreateSubscription = (tagName, instagram_access_token) ->
     params = extend({}, params, access_token: instagram_access_token) if instagram_access_token
     settings.inst.tags.subscribe params
 
-backfillTag = (tagName, num, maxID, instagram_access_token) ->
+backfillTag = (tagName, num, maxInstagramId, instagram_access_token) ->
   redisClient.llen 'media:objects:' + tagName, (error, tagCount) ->
 
     debug 'TAG COUNT: ' + tagCount
-    debug 'MAX ID: ' + maxID
+    debug 'MAX Id: ' + maxInstagramId
     return if tagCount >= num
 
     params =
       name : tagName
-      max_id : maxID
+      max_id : maxInstagramId
       complete : (data, pagination) ->
-        videos = (media for media in data when media['type'] == 'video')
-        redisClient.publish 'channel:' + tagName, JSON.stringify(videos) if videos.length > 0
+        videos = (saveVideo media for media in data when media['type'] == 'video')
 
         newTagCount = tagCount + videos.length
-        if newTagCount < num && typeof maxID != 'undefined'
-          backfillTag(tagName, num, pagination['next_max_id'], instagram_access_token)
+        if newTagCount < num && typeof maxInstagramId != 'undefined'
+          backfillTag(tagName, newTagCount, pagination['next_max_id'], instagram_access_token)
 
       error : (errorMessage, errorObject, caller) ->
-        debug 'backfillTag: ' + errorMessage
+        debug 'error backfilling tag: ' + errorMessage
 
     params = extend({}, params, access_token: instagram_access_token) if instagram_access_token
     settings.inst.tags.recent params
 
 # Each update that comes from settings.inst merely tells us that there's new
 # data to go fetch. The update does not include the data. So, we take the
-# tag ID from the update, and make the call to the API.
+# tag Id from the update, and make the call to the API.
 processTag = (tagName) ->
   debug 'Processing tag: ' + tagName
-  getMinID tagName, (error, minID) ->
+  getMinInstagramId tagName, (error, minInstagramId) ->
     getRandAccessToken tagName, (error, instagram_access_token) ->
-      if minID == "XXX"
+      if minInstagramId == "XXX"
         debug 'Request for ' + tagName + ' already in progress'
         return
 
-      setMinID tagName, 'XXX'
+      setMinInstagramId tagName, 'XXX'
 
       debug 'ACCESS_TOKEN: ' + instagram_access_token
       params =
         name : tagName
-        min_id : minID
+        min_id : minInstagramId
         complete : (data, pagination) ->
-          setMinID tagName, pagination['min_tag_id']
-          recentMedia = (media for media in data when media['type'] == 'video')
-          if recentMedia.length > 0
-            redisClient.publish 'channel:' + tagName, JSON.stringify(recentMedia)
-            console.log (saveMedia media) for media in recentMedia
+          setMinInstagramId tagName, pagination['min_tag_id']
+          videos = (saveVideo(media) for media in data when media['type'] == 'video')
         error : (errorMessage, errorObject, caller) ->
-          setMinID tagName, ''
+          setMinInstagramId tagName, ''
           debug 'processTag: ' + errorMessage
 
       params = extend({}, params, access_token: instagram_access_token) if instagram_access_token
       settings.inst.tags.recent params
 
-getMedia = (tagName, callback) ->
-  # This function gets the most recent media stored in redis
-  redisClient.lrange 'media:objects:' + tagName, 0, 14, (error, media) ->
-    debug 'getMedia: got ' + media.length + ' items'
+getVideo = (id, callback) ->
+  debug 'finding video with _id: ' + id
+  Video.findOne(_id: new ObjectId(id)).exec (err, video) ->
+    if err
+      debug 'Error getting video: ' + err
+    else
+      debug 'found video: ' + video
+      callback err, video
 
+getVideos = (tagName, minId, callback) ->
+  # get all videos for a tag created since the passed in minId
+  if minId
+    debug 'getting videos since: ' + minId
+    query = Video.find(
+      tags: tagName
+      _id: { $gt: minId }
+    ).sort('+received_at').limit(100)
+  else
+    debug 'getting recent videos'
+    query = Video.find(tags: tagName).sort('+received_at').limit(20)
+
+  query.exec (err, videos) ->
+    debug 'Error in getVideos: ' + err if err
     # if there are no existing videos, let's backfill a dozen to start playing
-    if media.length == 0
+    if videos.length == 0
       getRandAccessToken tagName, (error, instagram_access_token) ->
         debug 'Backfilling tag: ' + tagName
         backfillTag tagName, 30, '', instagram_access_token
 
-    # Parse each media JSON to send to callback
-    media = media.map((json) ->
-      JSON.parse json
-    )
-    callback error, tagName, media
+    callback err, tagName, videos
 
-saveMedia = (media) ->
+    # Parse each media JSON to send to callback
+    # media = videos.map((json) ->
+    #   JSON.parse json
+    # )
+    # callback error, tagName, videos
+
+saveVideo = (media) ->
   videoData =
     instagram_id: media['id']
     external_created_at: media['created_time']
@@ -128,8 +145,9 @@ saveMedia = (media) ->
       full_name: media['user']['full_name']
     preview: media['images']['standard_resolution']
     sources:
-      hi: media['videos']['standard_resolution']
-      lo: media['videos']['low_resolution']
+      hi: media['videos']['standard_resolution']['url']
+      lo: media['videos']['low_resolution']['url']
+    tags: media['tags']
 
   videoData = extend({}, videoData,
     caption: media['caption']['text']
@@ -145,10 +163,9 @@ saveMedia = (media) ->
   video = new Video videoData
   video.save (err, video) ->
     return console.error 'error saving video: ' + err if err
-
   return video
 
-# In order to only ask for the most recent media, we store the MAXIMUM ID
+# In order to only ask for the most recent media, we store the MAXIMUM Id
 # of the media for every tag we've fetched. This way, when we get an
 # update, we simply provide a min_id parameter to the settings.inst API that
 # fetches all media that have been posted *since* the min_id.
@@ -159,16 +176,16 @@ saveMedia = (media) ->
 # who will trigger an update on your same tag, then we will skip
 # over your media.
 
-getMinID = (tagName, callback) ->
-  redisClient.get 'min-id:channel:' + tagName, callback
+getMinInstagramId = (tagName, callback) ->
+  redisClient.get 'min-instagram-id:channel:' + tagName, callback
 
-setMinID = (tagName, min_tag_id) ->
+setMinInstagramId = (tagName, min_tag_instagram_id) ->
   try
-    if not min_tag_id then min_tag_id = ''
-    debug 'setting min_tag_id: ' + min_tag_id
-    redisClient.set 'min-id:channel:' + tagName, min_tag_id
+    if not min_tag_instagram_id then min_tag_instagram_id = ''
+    debug 'setting min_tag_instagram_id: ' + min_tag_instagram_id
+    redisClient.set 'min-instagram-id:channel:' + tagName, min_tag_instagram_id
   catch e
-    console.log 'Error parsing min ID'
+    console.log 'Error parsing min instagram Id'
     console.log e
 
 getRandAccessToken = (tagName, callback) ->
@@ -176,7 +193,6 @@ getRandAccessToken = (tagName, callback) ->
 
 getCurrentSubscriptions = (callback) ->
   subscriptions = redisClient.lrange 'subscriptions', 0, -1, (error, media) ->
-    helpers.debug subscriptions
     callback error, tagName, media
 
 
@@ -190,6 +206,7 @@ exports.isValidRequest          = isValidRequest
 exports.debug                   = debug
 exports.maybeCreateSubscription = maybeCreateSubscription
 exports.processTag              = processTag
-exports.getMedia                = getMedia
-exports.getMinID                = getMinID
-exports.setMinID                = setMinID
+exports.getVideo                = getVideo
+exports.getVideos               = getVideos
+exports.getMinInstagramId       = getMinInstagramId
+exports.setMinInstagramId       = setMinInstagramId

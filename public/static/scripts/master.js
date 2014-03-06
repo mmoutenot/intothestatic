@@ -1,18 +1,19 @@
 var crt = new CRT();
-var socket = io.connect(location.host);
 
 function enqueueVideo(v){
+  console.log(v);
   video_data = {
-    'id' : v.id,
-    'preview' : v.images.low_resolution.url,
+    'id' : v._id,
+    'instagram_id' : v.instagramId,
+    'preview' : v.preview,
     'sources' : {
-      'hi' : v.videos.standard_resolution.url,
-      'lo' : v.videos.low_resolution.url
+      'hi' : v.sources.hi,
+      'lo' : v.sources.lo
     },
     'details' : {
       'username' : v.user.username,
       'profile_picture' : v.user.profile_picture,
-      'post' : v.caption,
+      'caption' : v.caption,
       'location' : v.location
     }
   }
@@ -24,11 +25,6 @@ function processNewMedia(data){
   $(data).each(function(index, media){
     enqueueVideo(media);
   });
-}
-
-function createSocketListener(tagName){
-  console.log('Subscribing to the ' + tagName + ' channel');
-  socket.on('newMedia-'+tagName, processNewMedia);
 }
 
 function introduction() {
@@ -69,11 +65,23 @@ function playNextVideo(){
   crt.playNext();
 }
 
-function enqueueVideosForTag(tagName){
-    $.ajax({
-      type: 'GET',
-      url: '/tag/' + tagName
-    }).done(function(data) {
+function getVideoByTagAndId(tagName, id){
+    $.get('/tag/' + tagName + '/video/' + id)
+      .done(function(data) {
+          data['videos'].forEach(function(v){
+            enqueueVideo(v);
+          });
+      });
+}
+
+function enqueueRecentVideosForTag(tagName){
+  enqueueVideosForTag(tagName, null);
+}
+
+function enqueueVideosForTag(tagName, minId){
+    $.get('/tag/' + tagName,
+        { minId: minId }
+      ).done(function(data) {
       data['videos'].forEach(function(v){
         enqueueVideo(v);
       });
@@ -86,26 +94,23 @@ $().ready(function() {
 
   $('a#next').click(playNextVideo);
 
+  // we want to make sure we enqueue the video first before we enqueue channel's videos
+  if (video_id) {
+    getVideoByTagAndId(tag, video_id);
+  }
+
   if (tag){
-    enqueueVideosForTag(tag);
-    createSocketListener(tag);
+    // enqueueRecentVideosForTag(tag);
   }
 
   $('input').bind("enterKey",function(e){
     var newTag = $(this)[0].value;
-
-    socket.removeListener('newMedia-'+tag, processNewMedia);
-    console.log('unbinding from ' + tag + ' channel');
-
     crt.clearQueue();
-
     tag = newTag;
-    createSocketListener(tag);
-
     console.log('tag submitted: ' + newTag);
 
     // get backlog of videos to start playing
-    enqueueVideosForTag(tag);
+    enqueueRecentVideosForTag(tag);
   });
 
   $('input').keyup(function(e){

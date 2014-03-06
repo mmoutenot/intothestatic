@@ -45,7 +45,7 @@ app.get '/', (request, response) ->
     display: 'touch'
   )
   authed = typeof request.session.instagram_access_token != 'undefined'
-  helpers.debug request.session.instagram_access_token
+  helpers.debug 'instagram access token: ' + request.session.instagram_access_token
   # helpers.getCurrentSubscriptions
   response.render 'tv.jade',
     tag: tagName,
@@ -54,18 +54,48 @@ app.get '/', (request, response) ->
 
 app.get '/tag/:tagName', (request, response) ->
   tagName = request.params.tagName
+  minId = request.query.minId
   helpers.debug 'GET /tag/' + tagName
 
   subscriptionCreated =
     helpers.maybeCreateSubscription(tagName, request.session.instagram_access_token)
-  helpers.getMedia tagName, (error, tagName, media) ->
+  helpers.getVideos tagName, minId, (error, tagName, media) ->
     response.json(
       tag: tagName,
       videos: media
     )
 
+app.get '/channel/:tagName/video/:id', (request, response) ->
+  tagName = request.params.tagName
+  videoId = request.params.id
+
+  external_auth_url = settings.inst.oauth.authorization_url(
+    scope: 'basic'
+    display: 'touch'
+  )
+  authed = typeof request.session.instagram_access_token != 'undefined'
+
+  response.render 'tv.jade',
+    tag: tagName
+    video_id: videoId
+    authed: authed
+    external_auth_url: external_auth_url
+
+app.get '/tag/:tagName/video/:id', (request, response) ->
+  tagName = request.params.tagName
+  videoId = request.params.id
+
+  helpers.getVideo videoId, (error, video) ->
+    helpers.debug error if error
+    response.json(
+      tag:tagName,
+      videos:[video]
+    )
+
 app.get '/channel/:tagName', (request, response) ->
   tagName = request.params.tagName
+  minId = request.query.minId
+
   helpers.debug 'GET /' + tagName
 
   external_auth_url = settings.inst.oauth.authorization_url(
@@ -73,12 +103,12 @@ app.get '/channel/:tagName', (request, response) ->
     display: 'touch'
   )
   authed = typeof request.session.instagram_access_token != 'undefined'
-  helpers.debug request.session.instagram_access_token
+  helpers.debug 'instagram access token: ' + request.session.instagram_access_token
 
   subscriptionCreated =
     helpers.maybeCreateSubscription(tagName, request.session.instagram_access_token)
 
-  helpers.getMedia tagName, (error, tagName, media) ->
+  helpers.getVideos tagName, minId, (error, tagName, media) ->
     response.render 'tv.jade',
       tag: tagName
       authed: authed
@@ -91,7 +121,6 @@ app.get '/oauth/callback', (request, response) ->
     request: request
     response: response
     complete: (params, response) ->
-      helpers.debug params
       request.session.instagram_access_token = params['access_token']
       request.session.instagram_user = params['user']
       response.redirect '/'

@@ -145,7 +145,7 @@ body {
           text-decoration: none; }
           #video-row #info-box #user-info .username a:hover {
             color: #fe7c78; }
-      #video-row #info-box #user-info .post {
+      #video-row #info-box #user-info .caption {
         line-height: 1.3em;
         width: 90%;
         margin: .5em auto;

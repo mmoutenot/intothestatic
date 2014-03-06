@@ -3,7 +3,9 @@ Schema = mongoose.Schema
 
 videoSchema = mongoose.Schema
   id: Schema.Types.ObjectId
-  instagram_id: String
+  instagram_id:
+    type: String
+    unique: true
   external_created_at: Date
   received_at:
     type: Date

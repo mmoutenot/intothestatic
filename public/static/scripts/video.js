@@ -7,6 +7,7 @@ var CRT = function(videos) {
   this.el_details = this.$el_details[0];
 
   this.current = null;
+  this.lastPlayed = null;
   this.videos = videos || {};
   this.queue = [];
   this.$el_video.on('ended', _.bind(this.onEnded, this));
@@ -25,8 +26,8 @@ CRT.prototype.updateDetails = function(){
   this.$el_details.append('<img class="profile-picture" src=' + this.current.details.profile_picture + '>');
   this.$el_details.append('<h4 class="username"><a target="_blank" href="http://instagram.com/'
       + this.current.details.username + '">' + this.current.details.username + '</p>');
-  if (this.current.details.post) {
-    this.$el_details.append('<p class="post">'+this.current.details.post.text+'</p>');
+  if (this.current.details.caption) {
+    this.$el_details.append('<p class="caption">'+this.current.details.caption+'</p>');
   }
   console.log(this.current.details.location);
 }
@@ -39,7 +40,7 @@ CRT.prototype.displayNextPreview = function(){
 }
 
 CRT.prototype.play = function(video_data) {
-  var source = video_data.sources.hi;
+  var source = video_data.sources.lo;
   if (!source) throw new Error('no video ' + source);
 
   this.$el_video.find('source').remove();
@@ -90,9 +91,30 @@ CRT.prototype.queueDepth = function() {
 }
 
 CRT.prototype.playNext = function() {
+  if (this.current){
+    this.lastPlayed = this.current;
+  }
+
   var next = this.queue.shift();
-  if (next) this.play(next);
-  else this.current = null;
+  var minId;
+
+  if (next){
+    this.play(next);
+    $('#next').html('next');
+  } else {
+    this.current = null;
+    $('#next').html('ref');
+  }
+
+  if (this.queueDepth() > 0){
+    minId = this.queue[this.queue.length-1].id;
+  } else if (this.lastPlayed) {
+    minId = this.lastPlayed.id;
+  } else {
+    minId = null;
+  }
+
+  enqueueVideosForTag(tag, minId);
 }
 
 CRT.prototype.onEnded = function(e) {
