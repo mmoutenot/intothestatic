@@ -49,10 +49,13 @@ maybeCreateSubscription = (tagName, instagram_access_token) ->
     settings.inst.tags.subscribe params
 
 backfillTag = (tagName, num, maxInstagramId, instagram_access_token) ->
-  redisClient.llen 'media:objects:' + tagName, (error, tagCount) ->
+  debug 'Backfilling tag: ' + tagName
 
-    debug 'TAG COUNT: ' + tagCount
-    debug 'MAX Id: ' + maxInstagramId
+  query = Video.find(
+    tags: tagName
+  ).count()
+
+  query.exec (err, tagCount) ->
     return if tagCount >= num
 
     params =
@@ -63,7 +66,7 @@ backfillTag = (tagName, num, maxInstagramId, instagram_access_token) ->
 
         newTagCount = tagCount + videos.length
         if newTagCount < num && typeof maxInstagramId != 'undefined'
-          backfillTag(tagName, newTagCount, pagination['next_max_id'], instagram_access_token)
+          backfillTag(tagName, num, pagination['next_max_id'], instagram_access_token)
 
       error : (errorMessage, errorObject, caller) ->
         debug 'error backfilling tag: ' + errorMessage
@@ -124,7 +127,6 @@ getVideos = (tagName, minId, callback) ->
     # if there are no existing videos, let's backfill a dozen to start playing
     if videos.length == 0
       getRandAccessToken tagName, (error, instagram_access_token) ->
-        debug 'Backfilling tag: ' + tagName
         backfillTag tagName, 30, '', instagram_access_token
 
     callback err, tagName, videos
