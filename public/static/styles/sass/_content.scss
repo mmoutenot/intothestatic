@@ -1,0 +1,286 @@
+#title-row {
+  padding:30px 0;
+  margin: 0;
+  color:$grey;
+  @include clearfix;
+
+  .eight {
+    position: relative;
+  }
+
+  $h1-width: 277px;
+
+  h1 {
+    text-align: center;
+    font-weight: 100;
+    font-size: 4em;
+    margin:0;
+    text-shadow: 4px 2px darken($bluedark, 10%);
+    text-transform: uppercase;
+    float:left;
+    padding-top: 14px;
+    display: block;
+  }
+
+  #input-box {
+    display: block;
+    font-weight: 100;
+    position: absolute;
+    width:-webkit-calc( 100% - 310px );
+    width:calc( 100% - 310px );
+    left:310px;
+
+
+    #hashtag {
+      font-size: 4em;
+      color:$orange;
+      display: block;
+      position: absolute;
+      left:0;
+      top:.24em;
+      z-index:9;
+    }
+
+    #search {
+      // resets
+      background:$bluedark;
+      border:none; // border reset
+      outline:none;
+      box-shadow:none;
+      color:$orange;
+      font-family: $font-main;
+
+      font-size: 4em;
+      display: inline-block;
+      float:left;
+      width:-webkit-calc( 100% - 1em );
+      width:calc( 100% - 1em );
+      font-weight: 100;
+      padding: 0 0 0 .6em;
+      margin-top: .05em;
+      border-bottom: 1px dotted $orange;
+    }
+
+  }
+
+  #instagram {
+    border:1px solid darken($bluedark, 10%);
+    text-align: center;
+    font-weight: 100;
+    text-decoration: none;
+    min-width:180px;
+    width:100%;
+    color:$grey;
+    padding:.8em .8em;
+    border-radius: 4px;
+    display: block;
+
+    @include transition(all .05s ease-in-out);
+
+    &:hover {
+      background:#517fa4;
+      color:$white;
+      box-shadow:0 0 10px darken($bluedark, 10%);
+    }
+  }
+}
+
+#video-row {
+  padding: 10px 0 0 0;
+  margin: 0;
+  position:relative;
+  @include clearfix;
+
+
+  #middle {
+    position:relative;
+  }
+
+  #video_box {
+    display: block;
+    position:absolute;
+    height:80%;
+    width:55%;
+    left:10%;
+    top:10%;
+
+    video {
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  #tv {
+    border-radius: 10px;
+    box-shadow: 0 0 10px darken($bluedark, 20%);
+    z-index:3;
+    position: relative;
+  }
+
+  #info-box {
+    position:absolute;
+    right:6.8%;
+    top:3.6%;
+    width:22.6%;
+    height:93%;
+    z-index:5;
+
+    -webkit-content-box: border-box;
+    -moz-content-box: border-box;
+    content-box: border-box;
+
+    #user-info {
+      width:100%;
+      -webkit-content-box: border-box;
+      -moz-content-box: border-box;
+      content-box: border-box;
+      color:$bluedark;
+      padding-top: .3em;
+
+      overflow: hidden;
+      height: 60%;
+
+
+      .profile-picture {
+        width: 80px;
+        border-radius:40px;
+        -webkit-border-radius: 40px;
+        -moz-border-radius: 40px;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+      }
+
+      .username {
+        text-align: center;
+        margin:.3em 0 ;
+
+        a {
+          color: $orange;
+          text-decoration: none;
+
+          &:hover {
+            color:lighten($orange, 10%);
+          }
+        }
+
+      }
+
+      .caption {
+        line-height: 1.3em;
+        width:90%;
+        margin: .5em auto;
+        font-size: 14px;
+      }
+    }
+
+    #next {
+      width:90%;
+      display: block;
+      text-align: center;
+      background: $orange;
+      color:$white;
+      text-decoration: none;
+      padding:2%;
+      cursor:pointer;
+
+      font-weight: 300;
+      height:3em;
+      line-height: 3em;
+      font-size: 2em;
+      border-radius: 10px;
+      text-transform: uppercase;
+
+      position: absolute;
+      bottom:3%;
+      left: 2%;
+
+      //@include box-shadow(0px 6px 0px $orangedark);
+      @include transition(all .04s ease-in-out);
+
+      &:hover {
+        line-height: 3.2em;
+        background:lighten($orange, 4%);
+        //@include box-shadow(0px 6px 0px lighten($orange, 4%));
+      }
+    }
+  }
+}
+
+#footer {
+  position:fixed;
+  bottom:0;
+  width:100%;
+  left:0;
+  right:0;
+  height:40px;
+  background:darken($bluedark, 10%);
+  color:$grey;
+  margin: 0;
+  padding: 10px 0;
+  z-index:4;
+  font-weight: 100;
+
+  h4 {
+    text-align: right;
+    line-height: 40px;
+    margin: 0;
+    padding: 0;
+  }
+
+  a {
+    color:$orange;
+    text-decoration: none;
+    border-bottom: 1px dotted $orange;
+
+
+    &:hover {
+      color:lighten($orange, 10%);
+    }
+  }
+}
+
+@media only screen and (max-width: 1280px) {
+  #title-row {
+
+    h1 {
+      font-size: 3em;
+      text-align: center;
+      float: none;
+      margin-bottom: .3em;
+    }
+
+    #instagram {
+      position:absolute;
+      font-size: .8em;
+      top:10px;
+      right:10px;
+      width:180px;
+    }
+
+    #input-box {
+      width:60%;
+      margin: 0 auto;
+      float:none;
+      position: relative;
+      left:auto;
+
+      #search {
+        width:100%;
+        position: relative;
+        margin: 0 auto;
+        -webkit-box-style:border-box;
+        -moz-box-style:border-box;
+        box-style:border-box;
+      }
+    }
+  }
+
+  #video-row {
+    #info-box {
+      #next {
+        font-size: 1em;
+      }
+    }
+  }
+}

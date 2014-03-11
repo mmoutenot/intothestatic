@@ -1,0 +1,233 @@
+@import url(../../bower_components/Semantic-UI/build/minified/elements/icon.min.css);
+@import url(../../bower_components/Semantic-UI/build/minified/modules/video.min.css);
+@import url(../../bower_components/Semantic-UI/build/minified/collections/grid.min.css);
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,100,300,300italic);
+html, body {
+  height: 100%;
+  font-family: "Roboto", HelveticaNeue, Helvetica, sans-serif; }
+
+body {
+  font-size: 100%;
+  background-color: #32383e; }
+
+*::selection {
+  color: white;
+  background: #fd4b46; }
+
+#title-row {
+  padding: 30px 0;
+  margin: 0;
+  color: #dadada;
+  *zoom: 1; }
+  #title-row:before, #title-row:after {
+    content: " ";
+    display: table; }
+  #title-row:after {
+    clear: both; }
+  #title-row .eight {
+    position: relative; }
+  #title-row h1 {
+    text-align: center;
+    font-weight: 100;
+    font-size: 4em;
+    margin: 0;
+    text-shadow: 4px 2px #1b1e22;
+    text-transform: uppercase;
+    float: left;
+    padding-top: 14px;
+    display: block; }
+  #title-row #input-box {
+    display: block;
+    font-weight: 100;
+    position: absolute;
+    width: -webkit-calc(100% - 310px );
+    width: calc(100% - 310px );
+    left: 310px; }
+    #title-row #input-box #hashtag {
+      font-size: 4em;
+      color: #fd4b46;
+      display: block;
+      position: absolute;
+      left: 0;
+      top: .24em;
+      z-index: 9; }
+    #title-row #input-box #search {
+      background: #32383e;
+      border: none;
+      outline: none;
+      box-shadow: none;
+      color: #fd4b46;
+      font-family: "Roboto", HelveticaNeue, Helvetica, sans-serif;
+      font-size: 4em;
+      display: inline-block;
+      float: left;
+      width: -webkit-calc(100% - 1em );
+      width: calc(100% - 1em );
+      font-weight: 100;
+      padding: 0 0 0 .6em;
+      margin-top: .05em;
+      border-bottom: 1px dotted #fd4b46; }
+  #title-row #instagram {
+    border: 1px solid #1b1e22;
+    text-align: center;
+    font-weight: 100;
+    text-decoration: none;
+    min-width: 180px;
+    width: 100%;
+    color: #dadada;
+    padding: .8em .8em;
+    border-radius: 4px;
+    display: block;
+    -webkit-transition: all 0.05s ease-in-out;
+    -moz-transition: all 0.05s ease-in-out;
+    transition: all 0.05s ease-in-out; }
+    #title-row #instagram:hover {
+      background: #517fa4;
+      color: white;
+      box-shadow: 0 0 10px #1b1e22; }
+
+#video-row {
+  padding: 10px 0 0 0;
+  margin: 0;
+  position: relative;
+  *zoom: 1; }
+  #video-row:before, #video-row:after {
+    content: " ";
+    display: table; }
+  #video-row:after {
+    clear: both; }
+  #video-row #middle {
+    position: relative; }
+  #video-row #video_box {
+    display: block;
+    position: absolute;
+    height: 80%;
+    width: 55%;
+    left: 10%;
+    top: 10%; }
+    #video-row #video_box video {
+      height: 100%;
+      width: 100%; }
+  #video-row #tv {
+    border-radius: 10px;
+    box-shadow: 0 0 10px #040506;
+    z-index: 3;
+    position: relative; }
+  #video-row #info-box {
+    position: absolute;
+    right: 6.8%;
+    top: 3.6%;
+    width: 22.6%;
+    height: 93%;
+    z-index: 5;
+    -webkit-content-box: border-box;
+    -moz-content-box: border-box;
+    content-box: border-box; }
+    #video-row #info-box #user-info {
+      width: 100%;
+      -webkit-content-box: border-box;
+      -moz-content-box: border-box;
+      content-box: border-box;
+      color: #32383e;
+      padding-top: .3em;
+      overflow: hidden;
+      height: 60%; }
+      #video-row #info-box #user-info .profile-picture {
+        width: 80px;
+        border-radius: 40px;
+        -webkit-border-radius: 40px;
+        -moz-border-radius: 40px;
+        height: auto;
+        display: block;
+        margin: 0 auto; }
+      #video-row #info-box #user-info .username {
+        text-align: center;
+        margin: 0.3em 0; }
+        #video-row #info-box #user-info .username a {
+          color: #fd4b46;
+          text-decoration: none; }
+          #video-row #info-box #user-info .username a:hover {
+            color: #fe7c78; }
+      #video-row #info-box #user-info .caption {
+        line-height: 1.3em;
+        width: 90%;
+        margin: .5em auto;
+        font-size: 14px; }
+    #video-row #info-box #next {
+      width: 90%;
+      display: block;
+      text-align: center;
+      background: #fd4b46;
+      color: white;
+      text-decoration: none;
+      padding: 2%;
+      cursor: pointer;
+      font-weight: 300;
+      height: 3em;
+      line-height: 3em;
+      font-size: 2em;
+      border-radius: 10px;
+      text-transform: uppercase;
+      position: absolute;
+      bottom: 3%;
+      left: 2%;
+      -webkit-transition: all 0.04s ease-in-out;
+      -moz-transition: all 0.04s ease-in-out;
+      transition: all 0.04s ease-in-out; }
+      #video-row #info-box #next:hover {
+        line-height: 3.2em;
+        background: #fd5f5a; }
+
+#footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: #1b1e22;
+  color: #dadada;
+  margin: 0;
+  padding: 10px 0;
+  z-index: 4;
+  font-weight: 100; }
+  #footer h4 {
+    text-align: right;
+    line-height: 40px;
+    margin: 0;
+    padding: 0; }
+  #footer a {
+    color: #fd4b46;
+    text-decoration: none;
+    border-bottom: 1px dotted #fd4b46; }
+    #footer a:hover {
+      color: #fe7c78; }
+
+@media only screen and (max-width: 1280px) {
+  #title-row h1 {
+    font-size: 3em;
+    text-align: center;
+    float: none;
+    margin-bottom: .3em; }
+  #title-row #instagram {
+    position: absolute;
+    font-size: .8em;
+    top: 10px;
+    right: 10px;
+    width: 180px; }
+  #title-row #input-box {
+    width: 60%;
+    margin: 0 auto;
+    float: none;
+    position: relative;
+    left: auto; }
+    #title-row #input-box #search {
+      width: 100%;
+      position: relative;
+      margin: 0 auto;
+      -webkit-box-style: border-box;
+      -moz-box-style: border-box;
+      box-style: border-box; }
+
+  #video-row #info-box #next {
+    font-size: 1em; } }

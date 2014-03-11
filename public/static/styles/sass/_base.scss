@@ -1,0 +1,14 @@
+html, body {
+  height:100%;
+  font-family: $font-main;
+}
+
+body {
+	font-size: 100%;
+	background-color: $bluedark;
+}
+
+*::selection {
+  color:$white;
+  background:$orange;
+}

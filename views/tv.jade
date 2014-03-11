@@ -3,25 +3,20 @@ html
   head
     title INTO THE STATIC
 
-    link(rel="stylesheet", href="/static/styles/reset.css", type="text/css")
-    link(rel="stylesheet", href="/static/styles/master.css", type="text/css")
-    script(src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js", type="text/javascript")
-    script(src="http://underscorejs.org/underscore.js", type="text/javascript")
+    <!-- STYLES -->
+    link(rel="stylesheet", href="/static/styles/main.css", type="text/css")
+
+    <!-- SCRIPTS -->
+    script(src="/bower_components/jquery/dist/jquery.min.js", type="text/javascript")
+    script(src="/bower_components/underscore/underscore.js", type="text/javascript")
+    script(src="/bower_components/Semantic-UI/build/minified/modules/video.min.js", type="text/javascript")
     script(src="/static/scripts/video.js", type="text/javascript")
-
-    <!-- SEMANTIC UI -->
-    link(rel="stylesheet", href="/static/semantic/collections/grid.css", type="text/css")
-    link(rel="stylesheet", href="/static/semantic/elements/icon.css", type="text/css")
-
-    link(rel="stylesheet", href="/static/semantic/modules/video.css", type="text/css")
-    script(src="/static/semantic/modules/video.js", type="text/javascript")
-
-    link(href="http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic", rel="stylesheet", type="text/css")
     script.
       var video_id = "#{video_id}";
       var tag = "#{tag}";
     script(src="/static/scripts/analytics.js", type="text/javascript")
     script(src="/static/scripts/master.js", type="text/javascript")
+    
   body
 
     .ui.grid
