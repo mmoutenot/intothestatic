@@ -55,15 +55,21 @@ app.get '/', (request, response) ->
 app.get '/tag/:tagName', (request, response) ->
   tagName = request.params.tagName
   minId = request.query.minId
+  instagram_access_token = request.session.instagram_access_token
+
   helpers.debug 'GET /tag/' + tagName
 
-  subscriptionCreated =
-    helpers.maybeCreateSubscription(tagName, request.session.instagram_access_token)
-  helpers.getVideos tagName, minId, (error, tagName, media) ->
-    response.json(
-      tag: tagName,
-      videos: media
-    )
+  helpers.checkIfSubscriptionExists tagName, (err, reply) ->
+    subscriptionAlreadyExists = reply
+    if !subscriptionAlreadyExists
+      return response.send(401) if !instagram_access_token
+      helpers.createSubscription(tagName, request.session.instagram_access_token)
+
+    helpers.getVideos tagName, minId, (error, tagName, media) ->
+      response.json(
+        tag: tagName,
+        videos: media
+      )
 
 app.get '/channel/:tagName/video/:id', (request, response) ->
   tagName = request.params.tagName
@@ -105,14 +111,15 @@ app.get '/channel/:tagName', (request, response) ->
   authed = typeof request.session.instagram_access_token != 'undefined'
   helpers.debug 'instagram access token: ' + request.session.instagram_access_token
 
-  subscriptionCreated =
-    helpers.maybeCreateSubscription(tagName, request.session.instagram_access_token)
+  subscriptionCreatedOrExisted =
+    helpers.createSubscription(tagName, request.session.instagram_access_token)
 
   helpers.getVideos tagName, minId, (error, tagName, media) ->
     response.render 'tv.jade',
       tag: tagName
       authed: authed
       external_auth_url: external_auth_url
+      showAuthModal: subscriptionCreatedOrExisted
 
 app.get '/oauth/callback', (request, response) ->
   helpers.debug 'GET /oauth/callback'

@@ -26,27 +26,26 @@ isValidRequest = (request) ->
 debug = (msg) ->
   console.log msg  if settings.debug
 
-maybeCreateSubscription = (tagName, instagram_access_token) ->
-  debug 'in maybeCreateSubscription, access_token: ' + instagram_access_token
-  if instagram_access_token
-    redisClient.sadd 'tokens:' + tagName, instagram_access_token
-  subscription_exists = false
-  redisClient.sismember ['subscriptions', tagName], (err, reply) ->
-    subscription_exists = reply
-    if subscription_exists
-      debug 'subscription for ' + tagName + ' already exists'
-      return
+checkIfSubscriptionExists = (tagName, callback) ->
+  redisClient.sismember ['subscriptions', tagName], callback
 
-    params =
-      object_id: tagName
-      callback_url: settings.SUB_CALLBACK + tagName
-      complete: (data, pagination) ->
-        redisClient.sadd 'subscriptions', tagName
-      error: (errorMessage, errorObject, caller) ->
-        debug 'maybeCreateSubscription: ' + errorMessage
+createSubscription = (tagName, instagram_access_token) ->
+  debug 'in createSubscription, access_token: ' + instagram_access_token
+  if !instagram_access_token
+    debug 'You must be authenticated to create a subscription'
+    return
 
-    params = extend({}, params, access_token: instagram_access_token) if instagram_access_token
-    settings.inst.tags.subscribe params
+  redisClient.sadd 'tokens:' + tagName, instagram_access_token
+  params =
+    object_id: tagName
+    callback_url: settings.SUB_CALLBACK + tagName
+    complete: (data, pagination) ->
+      redisClient.sadd 'subscriptions', tagName
+    error: (errorMessage, errorObject, caller) ->
+      debug 'maybeCreateSubscription: ' + errorMessage
+
+  params = extend({}, params, access_token: instagram_access_token) if instagram_access_token
+  settings.inst.tags.subscribe params
 
 backfillTag = (tagName, num, maxInstagramId, instagram_access_token) ->
   debug 'Backfilling tag: ' + tagName
@@ -204,11 +203,12 @@ getCurrentSubscriptions = (callback) ->
 redis = require 'redis'
 redisClient = redis.createClient(settings.REDIS_PORT, settings.REDIS_HOST)
 
-exports.isValidRequest          = isValidRequest
-exports.debug                   = debug
-exports.maybeCreateSubscription = maybeCreateSubscription
-exports.processTag              = processTag
-exports.getVideo                = getVideo
-exports.getVideos               = getVideos
-exports.getMinInstagramId       = getMinInstagramId
-exports.setMinInstagramId       = setMinInstagramId
+exports.isValidRequest            = isValidRequest
+exports.debug                     = debug
+exports.createSubscription        = createSubscription
+exports.processTag                = processTag
+exports.getVideo                  = getVideo
+exports.getVideos                 = getVideos
+exports.getMinInstagramId         = getMinInstagramId
+exports.setMinInstagramId         = setMinInstagramId
+exports.checkIfSubscriptionExists = checkIfSubscriptionExists
