@@ -11,6 +11,7 @@ html
     script(src="/bower_components/underscore/underscore.js", type="text/javascript")
     script(src="/bower_components/Semantic-UI/build/minified/modules/video.min.js", type="text/javascript")
     script(src="/static/scripts/video.js", type="text/javascript")
+
     script.
       var video_id = "#{video_id}";
       var tag = "#{tag}";
@@ -18,31 +19,50 @@ html
     script(src="/static/scripts/master.js", type="text/javascript")
     
   body
+    a#modal-btn.button Toggle Modal
 
-    .ui.grid
-      .row#title-row
-        .four.wide.column
-        .eight.wide.column
-          h1 Into the
-          #input-box
-            span#hashtag #
-            input(type="text")#search
+    if !authed
+      a(href="#{external_auth_url}")#instagram-home.instagram.button Sign in with Instagram
 
-        .one.wide.column
-        .two.wide.column
-          if !authed
-            a(href="#{external_auth_url}")#instagram Sign in with Instagram
-        .one.wide.column
+    div.container#header
+      h2 Into the
+      #input-box
+        #hidden
+        span#hashtag #
+        input(type="text")
+        a#submit.button Watch
 
+    div.container#video-row
+      div.columns.fourteen.offset-by-one
+        img(src="/static/images/tv-blank-square.png")#tv
+        #video_box
+          a(href="https://twitter.com/share?url=http://intothestatic.com/channel/#{tag}&text=Found%20this%20on%20the%20##{tag}%20channel%20via%20@intothestatic", target="_twitter")
+            img(src="/static/images/twitter-round.png")#twitter.share-icon
+
+
+        #info-box
+          a(href="#")#next Next
+
+
+    div.wrapper#footer
+        h4  A project by <a href="#">@marsh</a> and <a href="#">@kennethacohen</a>.
+
+    #overlay
+    #modal
+      a#exit-modal x
+      h1 Yo! You should sign in with Instagram
+      a(href="#{external_auth_url}").instagram.button Sign in with Instagram
+
+//- 
       .row#video-row
-        .four.wide.column
-        .eight.wide.column#middle
+        .three.wide.column
+        .ten.wide.column#middle
           #video_box
           img(src="/static/images/tv-blank-square.png")#tv
           #info-box
             a#next Next
 
-        .four.wide.column
+        .three.wide.column
 
       .row#social-row
         <a href="https://twitter.com/share?url=http://intothestatic.com/channel/#{tag}&text=Found%20this%20on%20the%20##{tag}%20channel%20via%20@intothestatic" class="twitter-share-button" data-lang="en">Tweet</a>

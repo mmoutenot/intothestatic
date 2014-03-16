@@ -114,6 +114,17 @@ $().ready(function() {
   });
 
   $('input').keyup(function(e){
+    $('#hidden').html($(this).val());
+    var width = $('#hidden').width() + 50;
+    
+    // change width of parent div based on length of input
+    if (width < 600) {
+      var container = $(this).parent();
+      $(container).css({
+        width: width
+      });
+    }
+
     if(e.keyCode == 13) {
       $(this).trigger("enterKey");
     }
@@ -121,5 +132,11 @@ $().ready(function() {
 
   $('#video_box').append(crt.$el_video);
   $('#info-box').prepend(crt.$el_details);
+
+  $('#modal-btn, #overlay, #exit-modal').click(function() {
+    $('body').toggleClass('overlay-active');
+  });
+
+
 });
 
