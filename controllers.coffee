@@ -108,18 +108,15 @@ app.get '/channel/:tagName', (request, response) ->
     scope: 'basic'
     display: 'touch'
   )
+
   authed = typeof request.session.instagram_access_token != 'undefined'
   helpers.debug 'instagram access token: ' + request.session.instagram_access_token
-
-  subscriptionCreatedOrExisted =
-    helpers.createSubscription(tagName, request.session.instagram_access_token)
 
   helpers.getVideos tagName, minId, (error, tagName, media) ->
     response.render 'tv.jade',
       tag: tagName
       authed: authed
       external_auth_url: external_auth_url
-      showAuthModal: subscriptionCreatedOrExisted
 
 app.get '/oauth/callback', (request, response) ->
   helpers.debug 'GET /oauth/callback'
