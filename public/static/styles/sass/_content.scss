@@ -1,0 +1,239 @@
+.instagram {
+  background:$bluedark;
+  border:2px solid darken($bluedark, 10%);
+  padding:.8em 1.3em;  
+  border-radius: 8px;
+  &:hover {
+    background:$blue;
+    border:2px solid $blue;
+  }
+
+  &#instagram-home {
+    position: absolute;
+    right:40px;
+    top:10px;
+  }
+}
+
+#header {
+  padding: 1.3em 0;
+
+  * {
+    text-transform: uppercase;
+    margin: 0;
+  }
+
+  #input-box {
+    min-width:30em;
+    min-width:10em;
+    width:10em;
+    margin: 0 auto;
+    position: relative;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+
+    #hashtag {
+      color:$orange;
+      position: absolute;
+      left:0;
+      font-size: 2.6em;
+      font-weight: 100;
+    }
+    
+    input[type="text"] {
+      color:$orange;
+      background:$bluedark;
+      font-family: $font-main;
+      border:none;
+      box-shadow:none;
+      display: block;
+      margin: 0 auto;
+      text-align: left;
+      font-size: 2.6em;
+      border-bottom:2px dashed $orange;
+      padding: 0 0 0 .7em; // for the hashtag    
+      width: 100%;
+      font-weight: 100;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+
+      &:focus {
+        outline:none;
+
+        + #submit {
+          display: block;
+          border:2px solid $blue;
+        }
+      }
+    }
+
+    #submit {
+      position: absolute;
+      right:-120px;
+      top:0px;
+      color:$white;
+      border-radius: 8px;
+      padding: .6em 1.1em;
+      margin-top: 9px;
+      cursor: pointer;
+      background: none;
+      border:2px solid darken($bluedark, 10%);
+
+      &:hover {
+        background:$blue;
+      }
+    }
+
+    #hidden {
+      display: none;
+      font-size: 2.6em;
+    }
+  }
+}
+
+
+#video-row {
+  #video_box {
+    display: block;
+    position:absolute;
+    height:74%;
+    width:47%;
+    left:16%;
+    top:13%;
+
+    .share-icon {
+      width:50px;
+      height:auto;
+      position:absolute;
+      bottom:20px;
+      opacity: .5;
+
+      &:hover {
+        opacity: 1;
+      }
+
+      &#twitter {
+        right:20px;
+      }
+    }
+  
+    video {
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  #tv {
+    width:100%;
+    height:auto;
+    border-radius: 8px;
+    box-shadow:0 0 10px darken($bluedark, 10%);
+  }
+
+  #info-box {
+    position:absolute;
+    right:10.4%;
+    top:3.6%;
+    width:21.4%;
+    height:92.4%;
+
+    #user-info {
+      width:100%;
+      -webkit-content-box: border-box;
+      -moz-content-box: border-box;
+      content-box: border-box;
+      color:$bluedark;
+      padding-top: .3em;
+
+      overflow: hidden;
+      height: 60%;
+
+
+      .profile-picture {
+        width: 80px;
+        border-radius:40px;
+        -webkit-border-radius: 40px;
+        -moz-border-radius: 40px;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+      }
+
+      .username {
+        text-align: center;
+        margin:.3em 0 ;
+
+        a {
+          color: $orange;
+          text-decoration: none;
+
+          &:hover {
+            color:lighten($orange, 10%);
+          }
+        }
+      }
+
+      .caption {
+        line-height: 1.3em;
+        width:90%;
+        margin: .5em auto;
+        font-size: 14px;
+      }
+    }
+
+    #next {
+      width:90%;
+      display: block;
+      text-align: center;
+      background: $orange;
+      color:$white;
+      text-decoration: none;
+      padding:2%;
+      cursor:pointer;
+      font-weight: 300;
+      height:2em;
+      line-height: 2em;
+      font-size: 2em;
+      border-radius:12px;      
+      text-transform: uppercase;
+      position: absolute;
+      bottom:1%;
+      left: 2.3%;
+      @include transition(all .04s ease-in-out);
+
+      &:hover {
+        background:$orangedark;
+      }
+    }
+  }
+}
+
+
+
+
+
+  //     .username {
+  //       text-align: center;
+  //       margin:.3em 0 ;
+
+  //       a {
+  //         color: $orange;
+  //         text-decoration: none;
+
+  //         &:hover {
+  //           color:lighten($orange, 10%);
+  //         }
+  //       }
+
+  //     }
+
+  //     .caption {
+  //       line-height: 1.3em;
+  //       width:90%;
+  //       margin: .5em auto;
+  //       font-size: 14px;
+  //     }
+  //   }
+
+    
+  // }

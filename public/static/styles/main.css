@@ -1,0 +1,721 @@
+@import url(../../bower_components/Semantic-UI/build/minified/elements/icon.min.css);
+@import url(../../bower_components/Semantic-UI/build/minified/modules/video.min.css);
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,100,300,300italic);
+/*
+#Grid System
+
+<div class="one column alpha">One</div>
+<div class="fifteen columns omega">Fifteen</div>
+<div class="three columns alpha">Three</div>
+<div class="thirteen columns omega">Thirteen</div>
+<div class="push-by-twelve four columns alpha omega">Four Pushed by Twelve</div>
+<div class="seven columns alpha">Seven</div>
+<div class="nine columns omega">Nine</div>
+<div class="four columns alpha">Four</div>
+<div class="twelve columns omega">Twelve</div>
+<div class="five columns alpha">Five</div>
+<div class="eleven columns omega">Eleven</div>
+<div class="eight columns alpha">Eight</div>
+<div class="eight columns omega">Eight</div>
+<div class="six columns alpha">Six</div>
+<div class="ten columns omega">Ten</div>
+<div class="push-by-eight eight columns alpha omega">Eight Pushed by Eight</div>
+<div class="three columns alpha">Three</div>
+<div class="ten columns">Ten</div>
+<div class="three columns omega">Three</div>
+<div class="eleven columns alpha">Eleven</div>
+<div class="five columns omega">Five</div>
+*/
+.container {
+  position: relative;
+  margin: 0 auto;
+  padding: 0; }
+  .container .alpha {
+    margin-left: 0; }
+  .container .omega {
+    margin-right: 0; }
+
+.column, .columns {
+  float: left;
+  margin-left: 10px;
+  margin-right: 10px; }
+
+.alpha-omega {
+  margin-right: 0;
+  margin-left: 0; }
+
+.row {
+  margin-bottom: 20px; }
+
+.container {
+  width: 960px; }
+  .container .one {
+    width: 40px; }
+  .container .two {
+    width: 100px; }
+  .container .three {
+    width: 160px; }
+  .container .four {
+    width: 220px; }
+  .container .five {
+    width: 280px; }
+  .container .six {
+    width: 340px; }
+  .container .seven {
+    width: 400px; }
+  .container .eight {
+    width: 460px; }
+  .container .nine {
+    width: 520px; }
+  .container .ten {
+    width: 580px; }
+  .container .eleven {
+    width: 640px; }
+  .container .twelve {
+    width: 700px; }
+  .container .thirteen {
+    width: 760px; }
+  .container .fourteen {
+    width: 820px; }
+  .container .fifteen {
+    width: 880px; }
+  .container .sixteen {
+    width: 940px; }
+  .container .one-third {
+    width: 300px; }
+  .container .two-thirds {
+    width: 620px; }
+  .container .one-half {
+    width: 460px; }
+  .container .one-quarter {
+    width: 220px; }
+  .container .three-quarters {
+    width: 700px; }
+  .container .offset-by-one {
+    padding-left: 60px; }
+  .container .offset-by-two {
+    padding-left: 120px; }
+  .container .offset-by-three {
+    padding-left: 180px; }
+  .container .offset-by-four {
+    padding-left: 240px; }
+  .container .offset-by-five {
+    padding-left: 300px; }
+  .container .offset-by-six {
+    padding-left: 360px; }
+  .container .offset-by-seven {
+    padding-left: 420px; }
+  .container .offset-by-eight {
+    padding-left: 480px; }
+  .container .offset-by-nine {
+    padding-left: 540px; }
+  .container .offset-by-ten {
+    padding-left: 600px; }
+  .container .offset-by-eleven {
+    padding-left: 660px; }
+  .container .offset-by-twelve {
+    padding-left: 720px; }
+  .container .offset-by-thirteen {
+    padding-left: 780px; }
+  .container .offset-by-fourteen {
+    padding-left: 840px; }
+  .container .offset-by-fifteen {
+    padding-left: 900px; }
+  .container .pull-by-one {
+    margin-left: -60px; }
+  .container .pull-by-two {
+    margin-left: -120px; }
+  .container .pull-by-three {
+    margin-left: -180px; }
+  .container .pull-by-four {
+    margin-left: -240px; }
+  .container .pull-by-five {
+    margin-left: -300px; }
+  .container .pull-by-six {
+    margin-left: -360px; }
+  .container .pull-by-seven {
+    margin-left: -420px; }
+  .container .pull-by-eight {
+    margin-left: -480px; }
+  .container .pull-by-nine {
+    margin-left: -540px; }
+  .container .pull-by-ten {
+    margin-left: -600px; }
+  .container .pull-by-eleven {
+    margin-left: -660px; }
+  .container .pull-by-twelve {
+    margin-left: -720px; }
+  .container .pull-by-thirteen {
+    margin-left: -780px; }
+  .container .pull-by-fourteen {
+    margin-left: -840px; }
+  .container .pull-by-fifteen {
+    margin-left: -900px; }
+  .container .push-by-one {
+    margin-left: 60px; }
+  .container .push-by-two {
+    margin-left: 120px; }
+  .container .push-by-three {
+    margin-left: 180px; }
+  .container .push-by-four {
+    margin-left: 240px; }
+  .container .push-by-five {
+    margin-left: 300px; }
+  .container .push-by-six {
+    margin-left: 360px; }
+  .container .push-by-seven {
+    margin-left: 420px; }
+  .container .push-by-eight {
+    margin-left: 480px; }
+  .container .push-by-nine {
+    margin-left: 540px; }
+  .container .push-by-ten {
+    margin-left: 600px; }
+  .container .push-by-eleven {
+    margin-left: 660px; }
+  .container .push-by-twelve {
+    margin-left: 720px; }
+  .container .push-by-thirteen {
+    margin-left: 780px; }
+  .container .push-by-fourteen {
+    margin-left: 840px; }
+  .container .push-by-fifteen {
+    margin-left: 900px; }
+
+@media only screen and (max-width: 959px) {
+  .container {
+    width: 768px; }
+    .container .one {
+      width: 28px; }
+    .container .two {
+      width: 76px; }
+    .container .three {
+      width: 124px; }
+    .container .four {
+      width: 172px; }
+    .container .five {
+      width: 220px; }
+    .container .six {
+      width: 268px; }
+    .container .seven {
+      width: 316px; }
+    .container .eight {
+      width: 364px; }
+    .container .nine {
+      width: 412px; }
+    .container .ten {
+      width: 460px; }
+    .container .eleven {
+      width: 508px; }
+    .container .twelve {
+      width: 556px; }
+    .container .thirteen {
+      width: 604px; }
+    .container .fourteen {
+      width: 652px; }
+    .container .fifteen {
+      width: 700px; }
+    .container .sixteen {
+      width: 748px; }
+    .container .one-third {
+      width: 236px; }
+    .container .two-thirds {
+      width: 492px; }
+    .container .one-half {
+      width: 364px; }
+    .container .one-quarter {
+      width: 172px; }
+    .container .three-quarters {
+      width: 556px; }
+    .container .offset-by-one {
+      padding-left: 48px; }
+    .container .offset-by-two {
+      padding-left: 96px; }
+    .container .offset-by-three {
+      padding-left: 144px; }
+    .container .offset-by-four {
+      padding-left: 192px; }
+    .container .offset-by-five {
+      padding-left: 240px; }
+    .container .offset-by-six {
+      padding-left: 288px; }
+    .container .offset-by-seven {
+      padding-left: 336px; }
+    .container .offset-by-eight {
+      padding-left: 384px; }
+    .container .offset-by-nine {
+      padding-left: 432px; }
+    .container .offset-by-ten {
+      padding-left: 480px; }
+    .container .offset-by-eleven {
+      padding-left: 528px; }
+    .container .offset-by-twelve {
+      padding-left: 576px; }
+    .container .offset-by-thirteen {
+      padding-left: 624px; }
+    .container .offset-by-fourteen {
+      padding-left: 672px; }
+    .container .offset-by-fifteen {
+      padding-left: 720px; }
+    .container .pull-by-one {
+      margin-left: -48px; }
+    .container .pull-by-two {
+      margin-left: -96px; }
+    .container .pull-by-three {
+      margin-left: -144px; }
+    .container .pull-by-four {
+      margin-left: -192px; }
+    .container .pull-by-five {
+      margin-left: -240px; }
+    .container .pull-by-six {
+      margin-left: -288px; }
+    .container .pull-by-seven {
+      margin-left: -336px; }
+    .container .pull-by-eight {
+      margin-left: -384px; }
+    .container .pull-by-nine {
+      margin-left: -432px; }
+    .container .pull-by-ten {
+      margin-left: -480px; }
+    .container .pull-by-eleven {
+      margin-left: -528px; }
+    .container .pull-by-twelve {
+      margin-left: -576px; }
+    .container .pull-by-thirteen {
+      margin-left: -624px; }
+    .container .pull-by-fourteen {
+      margin-left: -672px; }
+    .container .pull-by-fifteen {
+      margin-left: -720px; }
+    .container .push-by-one {
+      margin-left: 48px; }
+    .container .push-by-two {
+      margin-left: 96px; }
+    .container .push-by-three {
+      margin-left: 144px; }
+    .container .push-by-four {
+      margin-left: 192px; }
+    .container .push-by-five {
+      margin-left: 240px; }
+    .container .push-by-six {
+      margin-left: 288px; }
+    .container .push-by-seven {
+      margin-left: 336px; }
+    .container .push-by-eight {
+      margin-left: 384px; }
+    .container .push-by-nine {
+      margin-left: 432px; }
+    .container .push-by-ten {
+      margin-left: 480px; }
+    .container .push-by-eleven {
+      margin-left: 528px; }
+    .container .push-by-twelve {
+      margin-left: 576px; }
+    .container .push-by-thirteen {
+      margin-left: 624px; }
+    .container .push-by-fourteen {
+      margin-left: 672px; }
+    .container .push-by-fifteen {
+      margin-left: 720px; }
+
+  .container {
+    width: 768px; } }
+/*
+  #Mobile Grid
+  Every column element in this grid is the total grid width
+*/
+@media only screen and (max-width: 767px) {
+  .container {
+    width: 90%; }
+    .container .one, .container .two, .container .three, .container .four, .container .five, .container .six, .container .seven, .container .eight, .container .nine, .container .ten, .container .eleven, .container .twelve, .container .thirteen, .container .fourteen, .container .fifteen, .container .sixteen, .container .one-third, .container .two-thirds, .container .one-half, .container .one-quarter, .container .three-quarters {
+      width: 100%; }
+    .container .column, .container .columns {
+      margin: 0; }
+    .container .offset-by-one,
+    .container .offset-by-two,
+    .container .offset-by-three,
+    .container .offset-by-four,
+    .container .offset-by-five,
+    .container .offset-by-six,
+    .container .offset-by-seven,
+    .container .offset-by-eight,
+    .container .offset-by-nine,
+    .container .offset-by-ten,
+    .container .offset-by-eleven,
+    .container .offset-by-twelve,
+    .container .offset-by-thirteen,
+    .container .offset-by-fourteen,
+    .container .offset-by-fifteen {
+      padding-left: 0; } }
+/*
+  ##Auto-applied clearfix for .container elements
+
+  ```<div class="container">
+    This element has clearfix applied in browsers that support the :after css selector
+  </div>```
+*/
+.container:after {
+  content: "\0020";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden; }
+
+/*
+ ##General use clearfix class
+ ```<div class="clearfix">This haz clearfix</div>```
+ Use this clearfix class on parent to clear nested columns, or:
+ wrap each row of columns in a ```<div class="row">...</div>```
+*/
+.clearfix:before,
+.clearfix:after,
+.row:before,
+.row:after {
+  content: '\0020';
+  display: block;
+  overflow: hidden;
+  visibility: hidden;
+  width: 0;
+  height: 0; }
+
+/*
+  ##Auto-applied clearfix for .row elements
+
+  ```<div class="row">
+    This element has clearfix applied in browsers that support the :after css selector
+  </div>```
+*/
+.row:after,
+.clearfix:after {
+  clear: both; }
+
+.row, .clearfix {
+  zoom: 1; }
+
+/*
+  ##Block level clear
+  You can also use a ```<br class="clear">``` to clear columns
+*/
+.clear {
+  clear: both;
+  display: block;
+  overflow: hidden;
+  visibility: hidden;
+  width: 0;
+  height: 0; }
+
+html, body {
+  font-family: "Roboto", Avenir, HelveticaNeue, Helvetica, sans-serif;
+  color: white; }
+
+body {
+  font-size: 100%;
+  height: 100%;
+  padding: 0;
+  background-color: #32383e; }
+
+*::selection {
+  color: white;
+  background: #fd4b46; }
+
+h1, h2, h3, h4, h5, h6 {
+  color: white;
+  font-weight: 100;
+  text-align: center; }
+
+a {
+  text-decoration: none; }
+  a.link {
+    color: #fd4b46;
+    border-bottom: 1px dashed #fd4b46; }
+    a.link *:hover {
+      color: #f40903; }
+  a.button {
+    display: block;
+    color: white;
+    padding: 1em 2em; }
+
+.instagram {
+  background: #32383e;
+  border: 2px solid #1b1e22;
+  padding: .8em 1.3em;
+  border-radius: 8px; }
+  .instagram:hover {
+    background: #4f91e3;
+    border: 2px solid #4f91e3; }
+  .instagram#instagram-home {
+    position: absolute;
+    right: 40px;
+    top: 10px; }
+
+#header {
+  padding: 1.3em 0; }
+  #header * {
+    text-transform: uppercase;
+    margin: 0; }
+  #header #input-box {
+    min-width: 30em;
+    min-width: 10em;
+    width: 10em;
+    margin: 0 auto;
+    position: relative;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box; }
+    #header #input-box #hashtag {
+      color: #fd4b46;
+      position: absolute;
+      left: 0;
+      font-size: 2.6em;
+      font-weight: 100; }
+    #header #input-box input[type="text"] {
+      color: #fd4b46;
+      background: #32383e;
+      font-family: "Roboto", Avenir, HelveticaNeue, Helvetica, sans-serif;
+      border: none;
+      box-shadow: none;
+      display: block;
+      margin: 0 auto;
+      text-align: left;
+      font-size: 2.6em;
+      border-bottom: 2px dashed #fd4b46;
+      padding: 0 0 0 .7em;
+      width: 100%;
+      font-weight: 100;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box; }
+      #header #input-box input[type="text"]:focus {
+        outline: none; }
+        #header #input-box input[type="text"]:focus + #submit {
+          display: block;
+          border: 2px solid #4f91e3; }
+    #header #input-box #submit {
+      position: absolute;
+      right: -120px;
+      top: 0px;
+      color: white;
+      border-radius: 8px;
+      padding: .6em 1.1em;
+      margin-top: 9px;
+      cursor: pointer;
+      background: none;
+      border: 2px solid #1b1e22; }
+      #header #input-box #submit:hover {
+        background: #4f91e3; }
+    #header #input-box #hidden {
+      display: none;
+      font-size: 2.6em; }
+
+#video-row #video_box {
+  display: block;
+  position: absolute;
+  height: 74%;
+  width: 47%;
+  left: 16%;
+  top: 13%; }
+  #video-row #video_box .share-icon {
+    width: 50px;
+    height: auto;
+    position: absolute;
+    bottom: 20px;
+    opacity: .5; }
+    #video-row #video_box .share-icon:hover {
+      opacity: 1; }
+    #video-row #video_box .share-icon#twitter {
+      right: 20px; }
+  #video-row #video_box video {
+    height: 100%;
+    width: 100%; }
+#video-row #tv {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 0 10px #1b1e22; }
+#video-row #info-box {
+  position: absolute;
+  right: 10.4%;
+  top: 3.6%;
+  width: 21.4%;
+  height: 92.4%; }
+  #video-row #info-box #user-info {
+    width: 100%;
+    -webkit-content-box: border-box;
+    -moz-content-box: border-box;
+    content-box: border-box;
+    color: #32383e;
+    padding-top: .3em;
+    overflow: hidden;
+    height: 60%; }
+    #video-row #info-box #user-info .profile-picture {
+      width: 80px;
+      border-radius: 40px;
+      -webkit-border-radius: 40px;
+      -moz-border-radius: 40px;
+      height: auto;
+      display: block;
+      margin: 0 auto; }
+    #video-row #info-box #user-info .username {
+      text-align: center;
+      margin: 0.3em 0; }
+      #video-row #info-box #user-info .username a {
+        color: #fd4b46;
+        text-decoration: none; }
+        #video-row #info-box #user-info .username a:hover {
+          color: #fe7c78; }
+    #video-row #info-box #user-info .caption {
+      line-height: 1.3em;
+      width: 90%;
+      margin: .5em auto;
+      font-size: 14px; }
+  #video-row #info-box #next {
+    width: 90%;
+    display: block;
+    text-align: center;
+    background: #fd4b46;
+    color: white;
+    text-decoration: none;
+    padding: 2%;
+    cursor: pointer;
+    font-weight: 300;
+    height: 2em;
+    line-height: 2em;
+    font-size: 2em;
+    border-radius: 12px;
+    text-transform: uppercase;
+    position: absolute;
+    bottom: 1%;
+    left: 2.3%;
+    -webkit-transition: all 0.04s ease-in-out;
+    -moz-transition: all 0.04s ease-in-out;
+    transition: all 0.04s ease-in-out; }
+    #video-row #info-box #next:hover {
+      background: #f40903; }
+
+#footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  left: 0;
+  right: 0;
+  height: 50px;
+  background: #1b1e22;
+  color: #dadada;
+  margin: 0;
+  z-index: 4;
+  padding: 0 40px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box; }
+  #footer h4 {
+    text-align: right;
+    line-height: 50px;
+    margin: 0;
+    padding: 0; }
+  #footer a {
+    color: #fd4b46;
+    text-decoration: none;
+    border-bottom: 1px dotted #fd4b46; }
+    #footer a:hover {
+      color: #fe7c78; }
+
+@-webkit-keyframes scale {
+  0% {
+    -webkit-transform: scale(0);
+    opacity: 0; }
+
+  100% {
+    -webkit-transform: scale(1);
+    opacity: 1; } }
+
+@-moz-keyframes scale {
+  0% {
+    -moz-transform: scale(0);
+    opacity: 0; }
+
+  100% {
+    -moz-transform: scale(1);
+    opacity: 1; } }
+
+@-o-keyframes scale {
+  0% {
+    -o-transform: scale(0);
+    opacity: 0; }
+
+  100% {
+    -o-transform: scale(1);
+    opacity: 1; } }
+
+@keyframes scale {
+  0% {
+    transform: scale(0);
+    opacity: 0; }
+
+  100% {
+    transform: scale(1);
+    opacity: 1; } }
+
+body.overlay-active #overlay {
+  display: block;
+  opacity: .95; }
+body.overlay-active #modal {
+  top: 300px; }
+
+#modal-btn {
+  position: absolute;
+  cursor: pointer;
+  z-index: 999999;
+  background: #fd4b46; }
+
+#overlay {
+  position: absolute;
+  background: #32383e;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: none; }
+
+#modal {
+  position: absolute;
+  width: 600px;
+  left: 50%;
+  margin-left: -300px;
+  height: 200px;
+  top: -500px;
+  margin-top: -100px;
+  background: #dadada;
+  border-radius: 4px;
+  z-index: 2;
+  padding: 20px;
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  -ms-box-sizing: content-box;
+  -o-box-sizing: content-box;
+  -khtml-box-sizing: content-box;
+  box-sizing: content-box;
+  -webkit-animation: scale 0.3s normal;
+  -moz-animation: scale 0.3s normal;
+  animation: scale 0.3s normal;
+  -webkit-transition: all 0.6s ease-in-out;
+  -moz-transition: all 0.6s ease-in-out;
+  transition: all 0.6s ease-in-out; }
+  #modal h1 {
+    color: #32383e;
+    margin: 1em 0; }
+  #modal .button {
+    margin: 0 auto;
+    width: 200px;
+    text-align: center; }
+  #modal #exit-modal {
+    position: relative;
+    float: right;
+    border-radius: 50%;
+    background: #aaaaaa;
+    color: white;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    cursor: pointer; }
+    #modal #exit-modal:hover {
+      background: #909090; }

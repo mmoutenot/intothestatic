@@ -1,0 +1,23 @@
+{
+  "name": "intothestatic",
+  "version": "0.0.0",
+  "homepage": "https://github.com/kennethacohen/intothestatic",
+  "authors": [
+    "Kenneth Cohen <kennethacohen@gmail.com>"
+  ],
+  "description": "Instagram video search",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "Skeleton-SCSS": "~1.0.12",
+    "bourbon": "~3.1.8",
+    "Semantic-UI": "~0.14.0",
+    "underscore": "~1.6.0"
+  }
+}

@@ -95,7 +95,20 @@ $().ready ->
 
   $("input").keyup (e) ->
     $(this).trigger "enterKey"  if e.keyCode is 13
+    
+    # create a hidden div with input text and find width
+    $("#hidden").html $(this).val()
+    width = $("#hidden").width() + 50
 
+    # set width of input container based on width variable
+    if width < 600
+      container = $(this).parent()
+      $(container).css width: width
+
+  # add modal and overlay on click
+  $("#modal-btn, #overlay, #exit-modal").click ->
+    $("body").toggleClass "overlay-active"
+    return
+    
   $("#video_box").append crt.$el_video
   $("#info-box").prepend crt.$el_details
-
