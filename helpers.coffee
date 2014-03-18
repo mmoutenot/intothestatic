@@ -119,7 +119,7 @@ getVideos = (tagName, minId, callback) ->
     ).sort('+received_at').limit(100)
   else
     debug 'getting recent videos'
-    query = Video.find(tags: tagName).sort('+received_at').limit(20)
+    query = Video.find(tags: tagName).sort('-received_at').limit(20)
 
   query.exec (err, videos) ->
     debug 'Error in getVideos: ' + err if err
