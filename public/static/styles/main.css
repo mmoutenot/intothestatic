@@ -446,7 +446,8 @@ a {
   .instagram#instagram-home {
     position: absolute;
     right: 40px;
-    top: 10px; }
+    top: 10px;
+    z-index: 2; }
 
 #header {
   padding: 1.3em 0; }
@@ -511,22 +512,21 @@ a {
   height: 74%;
   width: 47%;
   left: 16%;
-  top: 13%;
-  background-color:black;
-  z-index: -1;}
-  #video-row #video_box .share-icon {
+  top: 13%; }
+  #video-row #video_box .share-icon img {
+    position: absolute;
+    opacity: .5;
     width: 50px;
     height: auto;
-    position: absolute;
     bottom: 20px;
-    opacity: .5; }
-    #video-row #video_box .share-icon:hover {
-      opacity: 1; }
-    #video-row #video_box .share-icon#twitter {
-      right: 20px; }
+    right: 20px;
+    z-index: 2; }
+  #video-row #video_box .share-icon:hover img {
+    opacity: 1; }
   #video-row #video_box video {
     height: 100%;
-    width: 100%; }
+    width: 100%;
+    position: relative; }
 #video-row #tv {
   width: 100%;
   height: auto;
@@ -546,7 +546,7 @@ a {
     color: #32383e;
     padding-top: .3em;
     overflow: hidden;
-    height: 80%; }
+    height: 60%; }
     #video-row #info-box #user-info .profile-picture {
       width: 80px;
       border-radius: 40px;
@@ -675,7 +675,8 @@ body.overlay-active #modal {
   left: 0;
   bottom: 0;
   right: 0;
-  display: none; }
+  display: none;
+  z-index: 2; }
 
 #modal {
   position: absolute;
