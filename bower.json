@@ -1,8 +1,9 @@
 {
   "name": "intothestatic",
   "version": "0.0.0",
-  "homepage": "https://github.com/kennethacohen/intothestatic",
+  "homepage": "https://github.com/mmoutenot/intothestatic",
   "authors": [
+    "Marshall Moutenot <mmoutenot@gmail.com>",
     "Kenneth Cohen <kennethacohen@gmail.com>"
   ],
   "description": "Instagram video search",
