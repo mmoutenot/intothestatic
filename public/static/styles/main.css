@@ -515,7 +515,7 @@ a {
   top: 13%; }
   #video-row #video_box .share-icon img {
     position: absolute;
-    opacity: .5;
+    opacity: .95;
     width: 50px;
     height: auto;
     bottom: 20px;
@@ -531,7 +531,9 @@ a {
   width: 100%;
   height: auto;
   border-radius: 8px;
-  box-shadow: 0 0 10px #1b1e22; }
+  box-shadow: 0 0 10px #1b1e22;
+  position: relative;
+  z-index: 1; }
 #video-row #info-box {
   position: absolute;
   right: 10.4%;
