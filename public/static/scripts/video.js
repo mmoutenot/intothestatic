@@ -40,6 +40,17 @@
       }
     };
 
+    CRT.prototype.twitterShareLink = function(videoId) {
+      var twitterShareUrl;
+      twitterShareUrl = "https://twitter.com/share?url=http://intothestatic.com/channel/";
+      twitterShareUrl += tag;
+      twitterShareUrl += "/video/";
+      twitterShareUrl += videoId;
+      twitterShareUrl += "&text=Found%20this%20video%20on%20the%20%23";
+      twitterShareUrl += tag;
+      return twitterShareUrl += "%20channel%20via%20@intothestatic";
+    };
+
     CRT.prototype.play = function(video_data) {
       var source;
       source = video_data.sources.lo;
@@ -53,6 +64,7 @@
       this.el_video.load();
       this.current = video_data;
       console.log("loading/playing " + source);
+      $('#twitter-share').attr('href', this.twitterShareLink(video_data.id));
       this.updateDetails(video_data);
       this.displayNextPreview();
       return this;

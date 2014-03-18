@@ -85,6 +85,7 @@ $().ready ->
   # we want to make sure we enqueue the video first before we enqueue channel's videos
   getVideoByTagAndId tag, video_id  if video_id
   enqueueRecentVideosForTag tag  if tag
+
   $("input").bind "enterKey", (e) ->
     newTag = $(this)[0].value
     crt.clearQueue()

@@ -1,6 +1,7 @@
 createSourceElement = (source) ->
   "<source type=\"video/mp4\" src=\"" + source + "\"></source>"
 
+
 class window.CRT
   constructor: (videos) ->
     @$el_video = $("<video width=\"640px\" height=\"640px\"></video>")
@@ -28,6 +29,15 @@ class window.CRT
       next = @queue[0]
       console.log "coming up next: " + next.id
 
+  twitterShareLink: (videoId) ->
+    twitterShareUrl = "https://twitter.com/share?url=http://intothestatic.com/channel/"
+    twitterShareUrl += tag
+    twitterShareUrl += "/video/"
+    twitterShareUrl += videoId
+    twitterShareUrl += "&text=Found%20this%20video%20on%20the%20%23"
+    twitterShareUrl += tag
+    twitterShareUrl += "%20channel%20via%20@intothestatic"
+
   play: (video_data) ->
     source = video_data.sources.lo
     throw new Error("no video " + source)  unless source
@@ -38,6 +48,7 @@ class window.CRT
     @el_video.load()
     @current = video_data
     console.log "loading/playing " + source
+    $('#twitter-share').attr('href', @twitterShareLink(video_data.id))
     @updateDetails video_data
     @displayNextPreview()
     this
