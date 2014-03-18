@@ -12,6 +12,7 @@
     position: absolute;
     right:40px;
     top:10px;
+    z-index:2;
   }
 }
 
@@ -22,6 +23,7 @@
     text-transform: uppercase;
     margin: 0;
   }
+
 
   #input-box {
     min-width:30em;
@@ -102,24 +104,28 @@
     top:13%;
 
     .share-icon {
-      width:50px;
-      height:auto;
-      position:absolute;
-      bottom:20px;
-      opacity: .5;
 
-      &:hover {
-        opacity: 1;
-      }
-
-      &#twitter {
+      img {
+        position:absolute;
+        opacity: .5;
+        width:50px;
+        height:auto;
+        bottom:20px;
         right:20px;
+        z-index:2;
+      }
+      
+      &:hover {
+        img {
+          opacity: 1;
+        }
       }
     }
   
     video {
       height: 100%;
       width: 100%;
+      position: relative;
     }
   }
 
