@@ -1,232 +1,54 @@
-/* @override http://localhost:3000/static/styles/master.css */
-html, body {
-  height: 100%; }
+/*
+Syntax error: File to import not found or unreadable: bourbon/bourbon.
+              Load path: /Users/mmoutenot/workspace/intothestatic-coffee/public/static/styles
+        on line 4 of sass/master.scss
 
-body {
-  font-family: "Roboto", Avenir, Helvetica;
-  font-size: 100%;
-  background-color: #32383e; }
+1: /* @override http://localhost:3000/static/styles/master.css *\/
+2: 
+3: // includes
+4: @import "bourbon/bourbon";
+5: 
+6: // vars
+7: $grey: #dadada;
+8: $bluedark: #32383E;
+9: $tvblue: #070936;
 
-*::selection {
-  color: white;
-  background: #fd4b46; }
-
-#title-row {
-  padding: 30px 0;
-  margin: 0;
-  color: #dadada;
-  *zoom: 1; }
-  #title-row:before, #title-row:after {
-    content: " ";
-    display: table; }
-  #title-row:after {
-    clear: both; }
-  #title-row .eight {
-    position: relative; }
-  #title-row h1 {
-    text-align: center;
-    font-weight: 100;
-    font-size: 4em;
-    margin: 0;
-    text-shadow: 4px 2px #1b1e22;
-    text-transform: uppercase;
-    float: left;
-    padding-top: 14px;
-    display: block; }
-  #title-row #input-box {
-    display: block;
-    font-weight: 100;
-    position: absolute;
-    width: -webkit-calc(100% - 310px );
-    width: calc(100% - 310px );
-    left: 310px; }
-    #title-row #input-box #hashtag {
-      font-size: 4em;
-      color: #fd4b46;
-      display: block;
-      position: absolute;
-      left: 0;
-      top: .24em;
-      z-index: 9; }
-    #title-row #input-box #search {
-      background: #32383e;
-      border: none;
-      outline: none;
-      box-shadow: none;
-      color: #fd4b46;
-      font-family: "Roboto", Avenir, Helvetica;
-      font-size: 4em;
-      display: inline-block;
-      float: left;
-      width: -webkit-calc(100% - 1em );
-      width: calc(100% - 1em );
-      font-weight: 100;
-      padding: 0 0 0 .6em;
-      margin-top: .05em;
-      border-bottom: 1px dotted #fd4b46; }
-  #title-row #instagram {
-    border: 1px solid #1b1e22;
-    text-align: center;
-    font-weight: 100;
-    text-decoration: none;
-    min-width: 180px;
-    width: 100%;
-    color: #dadada;
-    padding: .8em .8em;
-    border-radius: 4px;
-    display: block;
-    -webkit-transition: all 0.05s ease-in-out;
-    -moz-transition: all 0.05s ease-in-out;
-    transition: all 0.05s ease-in-out; }
-    #title-row #instagram:hover {
-      background: #517fa4;
-      color: white;
-      box-shadow: 0 0 10px #1b1e22; }
-
-#video-row {
-  padding: 10px 0 0 0;
-  margin: 0;
-  position: relative;
-  *zoom: 1; }
-  #video-row:before, #video-row:after {
-    content: " ";
-    display: table; }
-  #video-row:after {
-    clear: both; }
-  #video-row #middle {
-    position: relative; }
-  #video-row #video_box {
-    display: block;
-    position: absolute;
-    height: 80%;
-    width: 55%;
-    left: 10%;
-    top: 10%; }
-    #video-row #video_box video {
-      height: 100%;
-      width: 100%; }
-  #video-row #tv {
-    border-radius: 10px;
-    box-shadow: 0 0 10px #040506;
-    z-index: 3;
-    position: relative; }
-  #video-row #info-box {
-    position: absolute;
-    right: 6.8%;
-    top: 3.6%;
-    width: 22.6%;
-    height: 93%;
-    z-index: 5;
-    -webkit-content-box: border-box;
-    -moz-content-box: border-box;
-    content-box: border-box; }
-    #video-row #info-box #user-info {
-      width: 100%;
-      -webkit-content-box: border-box;
-      -moz-content-box: border-box;
-      content-box: border-box;
-      color: #32383e;
-      padding-top: .3em;
-      overflow: hidden;
-      height: 60%; }
-      #video-row #info-box #user-info .profile-picture {
-        width: 80px;
-        border-radius: 40px;
-        -webkit-border-radius: 40px;
-        -moz-border-radius: 40px;
-        height: auto;
-        display: block;
-        margin: 0 auto; }
-      #video-row #info-box #user-info .username {
-        text-align: center;
-        margin: 0.3em 0; }
-        #video-row #info-box #user-info .username a {
-          color: #fd4b46;
-          text-decoration: none; }
-          #video-row #info-box #user-info .username a:hover {
-            color: #fe7c78; }
-      #video-row #info-box #user-info .caption {
-        line-height: 1.3em;
-        width: 90%;
-        margin: .5em auto;
-        font-size: 14px; }
-    #video-row #info-box #next {
-      width: 90%;
-      display: block;
-      text-align: center;
-      background: #fd4b46;
-      color: white;
-      text-decoration: none;
-      padding: 2%;
-      cursor: pointer;
-      font-weight: 300;
-      height: 3em;
-      line-height: 3em;
-      font-size: 2em;
-      border-radius: 10px;
-      text-transform: uppercase;
-      position: absolute;
-      bottom: 3%;
-      left: 2%;
-      box-shadow: 0px 6px 0px #f40903;
-      -webkit-transition: all 0.04s ease-in-out;
-      -moz-transition: all 0.04s ease-in-out;
-      transition: all 0.04s ease-in-out; }
-      #video-row #info-box #next:hover {
-        line-height: 3.2em;
-        background: #fd5f5a;
-        box-shadow: 0px 6px 0px #fd5f5a; }
-
-#footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  left: 0;
-  right: 0;
-  height: 40px;
-  background: #1b1e22;
-  color: #dadada;
-  margin: 0;
-  padding: 10px 0;
-  z-index: 4;
-  font-weight: 100; }
-  #footer h4 {
-    text-align: right;
-    line-height: 40px;
-    margin: 0;
-    padding: 0; }
-  #footer a {
-    color: #fd4b46;
-    text-decoration: none;
-    border-bottom: 1px dotted #fd4b46; }
-    #footer a:hover {
-      color: #fe7c78; }
-
-@media only screen and (max-width: 1280px) {
-  #title-row h1 {
-    font-size: 3em;
-    text-align: center;
-    float: none;
-    margin-bottom: .3em; }
-  #title-row #instagram {
-    position: absolute;
-    font-size: .8em;
-    top: 10px;
-    right: 10px;
-    width: 180px; }
-  #title-row #input-box {
-    width: 60%;
-    margin: 0 auto;
-    float: none;
-    position: relative;
-    left: auto; }
-    #title-row #input-box #search {
-      width: 100%;
-      position: relative;
-      margin: 0 auto;
-      -webkit-box-style: border-box;
-      -moz-box-style: border-box;
-      box-style: border-box; }
-
-  #video-row #info-box #next {
-    font-size: 1em; } }
+Backtrace:
+sass/master.scss:4
+/Users/mmoutenot/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/gems/sass-3.2.14/lib/sass/tree/import_node.rb:67:in `rescue in import'
+/Users/mmoutenot/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/gems/sass-3.2.14/lib/sass/tree/import_node.rb:45:in `import'
+/Users/mmoutenot/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/gems/sass-3.2.14/lib/sass/tree/import_node.rb:28:in `imported_file'
+/Users/mmoutenot/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/gems/sass-3.2.14/lib/sass/tree/import_node.rb:37:in `css_import?'
+/Users/mmoutenot/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/gems/sass-3.2.14/lib/sass/tree/visitors/perform.rb:217:in `visit_import'
+/Users/mmoutenot/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/gems/sass-3.2.14/lib/sass/tree/visitors/base.rb:37:in `visit'
+/Users/mmoutenot/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/gems/sass-3.2.14/lib/sass/tree/visitors/perform.rb:100:in `visit'
+/Users/mmoutenot/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/gems/sass-3.2.14/lib/sass/tree/visitors/base.rb:53:in `block in visit_children'
+/Users/mmoutenot/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/gems/sass-3.2.14/lib/sass/tree/visitors/base.rb:53:in `map'
+/Users/mmoutenot/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/gems/sass-3.2.14/lib/sass/tree/visitors/base.rb:53:in `visit_children'
+/Users/mmoutenot/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/gems/sass-3.2.14/lib/sass/tree/visitors/perform.rb:109:in `block in visit_children'
+/Users/mmoutenot/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/gems/sass-3.2.14/lib/sass/tree/visitors/perform.rb:121:in `with_environment'
+/Users/mmoutenot/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/gems/sass-3.2.14/lib/sass/tree/visitors/perform.rb:108:in `visit_children'
+/Users/mmoutenot/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/gems/sass-3.2.14/lib/sass/tree/visitors/base.rb:37:in `block in visit'
+/Users/mmoutenot/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/gems/sass-3.2.14/lib/sass/tree/visitors/perform.rb:128:in `visit_root'
+/Users/mmoutenot/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/gems/sass-3.2.14/lib/sass/tree/visitors/base.rb:37:in `visit'
+/Users/mmoutenot/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/gems/sass-3.2.14/lib/sass/tree/visitors/perform.rb:100:in `visit'
+/Users/mmoutenot/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/gems/sass-3.2.14/lib/sass/tree/visitors/perform.rb:7:in `visit'
+/Users/mmoutenot/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/gems/sass-3.2.14/lib/sass/tree/root_node.rb:20:in `render'
+/Users/mmoutenot/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/gems/sass-3.2.14/lib/sass/engine.rb:315:in `_render'
+/Users/mmoutenot/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/gems/sass-3.2.14/lib/sass/engine.rb:262:in `render'
+/Users/mmoutenot/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/gems/sass-3.2.14/lib/sass/plugin/compiler.rb:362:in `update_stylesheet'
+/Users/mmoutenot/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/gems/sass-3.2.14/lib/sass/plugin/compiler.rb:203:in `block in update_stylesheets'
+/Users/mmoutenot/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/gems/sass-3.2.14/lib/sass/plugin/compiler.rb:201:in `each'
+/Users/mmoutenot/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/gems/sass-3.2.14/lib/sass/plugin/compiler.rb:201:in `update_stylesheets'
+/Users/mmoutenot/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/gems/sass-3.2.14/lib/sass/plugin/compiler.rb:283:in `block in watch'
+/Users/mmoutenot/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/gems/sass-3.2.14/vendor/listen/lib/listen/multi_listener.rb:108:in `call'
+/Users/mmoutenot/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/gems/sass-3.2.14/vendor/listen/lib/listen/multi_listener.rb:108:in `on_change'
+/Users/mmoutenot/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/gems/sass-3.2.14/vendor/listen/lib/listen/multi_listener.rb:117:in `block in initialize_adapter'
+/Users/mmoutenot/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/gems/sass-3.2.14/vendor/listen/lib/listen/adapters/polling.rb:56:in `call'
+/Users/mmoutenot/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/gems/sass-3.2.14/vendor/listen/lib/listen/adapters/polling.rb:56:in `poll'
+/Users/mmoutenot/.rbenv/versions/2.0.0-p247/lib/ruby/gems/2.0.0/gems/sass-3.2.14/vendor/listen/lib/listen/adapters/polling.rb:32:in `block in start'
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Syntax error: File to import not found or unreadable: bourbon/bourbon.\A               Load path: /Users/mmoutenot/workspace/intothestatic-coffee/public/static/styles\A         on line 4 of sass/master.scss\A \A 1: /* @override http://localhost:3000/static/styles/master.css */\A 2: \A 3: // includes\A 4: @import \"bourbon/bourbon\";\A 5: \A 6: // vars\A 7: $grey: #dadada;\A 8: $bluedark: #32383E;\A 9: $tvblue: #070936;"; }

@@ -69,6 +69,7 @@ enqueueVideosForTag = (tagName, minId) ->
         enqueueVideo v
     error: (XMLHttpRequest, textStatus, errorThrown) ->
       if XMLHttpRequest.status == 401
+        $("body").toggleClass "overlay-active"
         console.log 'Attempted to create a subscription while unauthed.'
 
 crt = new window.CRT()
@@ -95,7 +96,7 @@ $().ready ->
 
   $("input").keyup (e) ->
     $(this).trigger "enterKey"  if e.keyCode is 13
-    
+
     # create a hidden div with input text and find width
     $("#hidden").html $(this).val()
     width = $("#hidden").width() + 50
@@ -106,9 +107,8 @@ $().ready ->
       $(container).css width: width
 
   # add modal and overlay on click
-  $("#modal-btn, #overlay, #exit-modal").click ->
+  $("#overlay, #exit-modal").click ->
     $("body").toggleClass "overlay-active"
-    return
-    
+
   $("#video_box").append crt.$el_video
   $("#info-box").prepend crt.$el_details

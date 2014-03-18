@@ -17,10 +17,8 @@ html
       var tag = "#{tag}";
     script(src="/static/scripts/analytics.js", type="text/javascript")
     script(src="/static/scripts/master.js", type="text/javascript")
-    
-  body
-    a#modal-btn.button Toggle Modal
 
+  body
     if !authed
       a(href="#{external_auth_url}")#instagram-home.instagram.button Sign in with Instagram
 
