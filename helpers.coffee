@@ -110,23 +110,24 @@ getVideo = (id, callback) ->
       callback err, video
 
 getVideos = (tagName, minId, callback) ->
+  debug 'getting videos since: ' + minId
   # get all videos for a tag created since the passed in minId
   if minId
-    debug 'getting videos since: ' + minId
     query = Video.find(
       tags: tagName
       _id: { $gt: minId }
-    ).sort('+received_at').limit(100)
+    ).sort('-received_at').limit(100)
   else
     debug 'getting recent videos'
     query = Video.find(tags: tagName).sort('-received_at').limit(20)
 
   query.exec (err, videos) ->
+    videos.reverse()
     debug 'Error in getVideos: ' + err if err
     # if there are no existing videos, let's backfill a dozen to start playing
     if videos.length == 0
       getRandAccessToken tagName, (error, instagram_access_token) ->
-        backfillTag tagName, 30, '', instagram_access_token
+        backfillTag tagName, 40, '', instagram_access_token
 
     callback err, tagName, videos
 

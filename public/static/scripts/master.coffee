@@ -1,5 +1,4 @@
 enqueueVideo = (v) ->
-  console.log v
   video_data =
     id: v._id
     instagram_id: v.instagramId
@@ -61,10 +60,16 @@ enqueueRecentVideosForTag = (tagName) ->
   enqueueVideosForTag tagName, null
 
 enqueueVideosForTag = (tagName, minId) ->
+  url = '/tag/' + tagName
+  url += '?minId=' + minId if minId
   $.ajax
     type: 'GET'
-    url: '/tag/' + tagName + '?minID=' + minId
+    url: url
     success: (data) ->
+      if data['videos'].length == 0
+        setTimeout ->
+          enqueueVideosForTag(tagName, minId)
+        , 5000
       data['videos'].forEach (v) ->
         enqueueVideo v
     error: (XMLHttpRequest, textStatus, errorThrown) ->

@@ -4,7 +4,6 @@
 
   enqueueVideo = function(v) {
     var video_data;
-    console.log(v);
     video_data = {
       id: v._id,
       instagram_id: v.instagramId,
@@ -83,10 +82,20 @@
   };
 
   enqueueVideosForTag = function(tagName, minId) {
+    var url;
+    url = '/tag/' + tagName;
+    if (minId) {
+      url += '?minId=' + minId;
+    }
     return $.ajax({
       type: 'GET',
-      url: '/tag/' + tagName + '?minID=' + minId,
+      url: url,
       success: function(data) {
+        if (data['videos'].length === 0) {
+          setTimeout(function() {
+            return enqueueVideosForTag(tagName, minId);
+          }, 5000);
+        }
         return data['videos'].forEach(function(v) {
           return enqueueVideo(v);
         });

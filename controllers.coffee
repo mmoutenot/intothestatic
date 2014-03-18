@@ -57,7 +57,10 @@ app.get '/tag/:tagName', (request, response) ->
   minId = request.query.minId
   instagram_access_token = request.session.instagram_access_token
 
-  helpers.debug 'GET /tag/' + tagName
+  if minId
+    helpers.debug 'GET /tag/' + tagName + '?minId=' + minId
+  else
+    helpers.debug 'GET /tag/' + tagName
 
   helpers.checkIfSubscriptionExists tagName, (err, reply) ->
     subscriptionAlreadyExists = reply
