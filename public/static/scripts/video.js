@@ -110,7 +110,7 @@
         return $("#next").html("next");
       } else {
         this.current = null;
-        return $("#next").html("<img height=\"50px\" width=\"50px\"src=\"/public/static/images/refresh-icon.png\">");
+        return $("#next").html("<img height=\"50px\" width=\"50px\"src=\"/static/images/refresh-icon.png\">");
       }
     };
 

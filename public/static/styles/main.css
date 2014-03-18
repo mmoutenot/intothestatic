@@ -511,7 +511,9 @@ a {
   height: 74%;
   width: 47%;
   left: 16%;
-  top: 13%; }
+  top: 13%;
+  background-color:black;
+  z-index: -1;}
   #video-row #video_box .share-icon {
     width: 50px;
     height: auto;
@@ -544,7 +546,7 @@ a {
     color: #32383e;
     padding-top: .3em;
     overflow: hidden;
-    height: 60%; }
+    height: 80%; }
     #video-row #info-box #user-info .profile-picture {
       width: 80px;
       border-radius: 40px;

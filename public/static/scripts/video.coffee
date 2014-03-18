@@ -98,7 +98,7 @@ class window.CRT
       $("#next").html "next"
     else
       @current = null
-      $("#next").html "<img height=\"50px\" width=\"50px\"src=\"/public/static/images/refresh-icon.png\">"
+      $("#next").html "<img height=\"50px\" width=\"50px\"src=\"/static/images/refresh-icon.png\">"
 
   onEnded: (e) ->
     @playNext()
