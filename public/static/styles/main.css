@@ -539,7 +539,8 @@ a {
   right: 10.4%;
   top: 3.6%;
   width: 21.4%;
-  height: 92.4%; }
+  height: 92.4%;
+  z-index: 1; }
   #video-row #info-box #user-info {
     width: 100%;
     -webkit-content-box: border-box;
