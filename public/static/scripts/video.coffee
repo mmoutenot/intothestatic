@@ -18,6 +18,8 @@ class window.CRT
     @$window = $(window)
     @$window.on "resize", _.bind(@resize, this)
 
+    @videosAlreadyPlayed = {}
+
   updateDetails: ->
     @$el_details.html ""
     @$el_details.append "<img class=\"profile-picture\" src=" + @current.details.profile_picture + ">"
@@ -91,10 +93,16 @@ class window.CRT
       null
 
   playNext: ->
-    @lastPlayed = @current  if @current
+    @lastPlayed = @current if @current
     next = @queue.shift()
+
+    @playNext() if @videosAlreadyPlayed[next.id]
+
     if next
       @play next
+
+      @videosAlreadyPlayed[next.id] = true
+
       $("#next").html "next"
     else
       @current = null

@@ -21,6 +21,7 @@
       this.$el_video.on("canplay", _.bind(this.el_video.play, this.el_video));
       this.$window = $(window);
       this.$window.on("resize", _.bind(this.resize, this));
+      this.videosAlreadyPlayed = {};
     }
 
     CRT.prototype.updateDetails = function() {
@@ -105,8 +106,12 @@
         this.lastPlayed = this.current;
       }
       next = this.queue.shift();
+      if (this.videosAlreadyPlayed[next.id]) {
+        this.playNext();
+      }
       if (next) {
         this.play(next);
+        this.videosAlreadyPlayed[next.id] = true;
         return $("#next").html("next");
       } else {
         this.current = null;
