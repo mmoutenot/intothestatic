@@ -103,10 +103,10 @@
     CRT.prototype.playNext = function() {
       var next;
       next = this.queue.shift();
-      if (this.videosAlreadyPlayed[next.id]) {
-        this.playNext();
-      }
       if (next) {
+        if (this.videosAlreadyPlayed[next.id]) {
+          this.playNext();
+        }
         this.play(next);
         this.lastPlayed = next;
         this.videosAlreadyPlayed[next.id] = true;

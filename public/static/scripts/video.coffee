@@ -95,9 +95,10 @@ class window.CRT
   playNext: ->
     next = @queue.shift()
 
-    @playNext() if @videosAlreadyPlayed[next.id]
 
     if next
+      @playNext() if @videosAlreadyPlayed[next.id]
+
       @play next
 
       @lastPlayed = next
