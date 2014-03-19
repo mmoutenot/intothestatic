@@ -107,7 +107,7 @@
 
       img {
         position:absolute;
-        opacity: .5;
+        opacity: .95;
         width:50px;
         height:auto;
         bottom:20px;
@@ -134,6 +134,8 @@
     height:auto;
     border-radius: 8px;
     box-shadow:0 0 10px darken($bluedark, 10%);
+    position: relative;
+    z-index:1;
   }
 
   #info-box {
