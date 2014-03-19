@@ -93,7 +93,6 @@ class window.CRT
       null
 
   playNext: ->
-    @lastPlayed = @current if @current
     next = @queue.shift()
 
     @playNext() if @videosAlreadyPlayed[next.id]
@@ -101,6 +100,7 @@ class window.CRT
     if next
       @play next
 
+      @lastPlayed = next
       @videosAlreadyPlayed[next.id] = true
 
       $("#next").html "next"

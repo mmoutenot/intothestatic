@@ -102,15 +102,13 @@
 
     CRT.prototype.playNext = function() {
       var next;
-      if (this.current) {
-        this.lastPlayed = this.current;
-      }
       next = this.queue.shift();
       if (this.videosAlreadyPlayed[next.id]) {
         this.playNext();
       }
       if (next) {
         this.play(next);
+        this.lastPlayed = next;
         this.videosAlreadyPlayed[next.id] = true;
         return $("#next").html("next");
       } else {
