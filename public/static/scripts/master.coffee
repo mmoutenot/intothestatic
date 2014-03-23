@@ -25,24 +25,24 @@ introduction = ->
   deleteLastLetter $input
 
 deleteLastLetter = ($input) ->
-  tag = $input.value
+  window.tag = $input.value
   delay = 1000 * Math.random()
   $input.focus()
-  if tag.length > 0
+  if window.tag.length > 0
     setTimeout (->
-      $input.value = tag.slice(0, tag.length - 1)
+      $input.value = window.tag.slice(0, window.tag.length - 1)
       deleteLastLetter $input
     ), delay + 200
   else
     setDefaultChannel $input
 
 setDefaultChannel = ($input) ->
-  tag = $input.value
+  window.tag = $input.value
   delay = 800 * Math.random()
   $input.focus()
-  unless tag.length is defaultChannel.length
+  unless window.tag.length is defaultChannel.length
     setTimeout (->
-      $input.value += defaultChannel[tag.length]
+      $input.value += defaultChannel[window.tag.length]
       setDefaultChannel $input
     ), delay + 100
   else
@@ -78,30 +78,34 @@ enqueueVideosForTag = (tagName, minId) ->
         console.log 'Attempted to create a subscription while unauthed.'
 
 crt = new window.CRT()
-defaultChannel = tag
+defaultChannel = window.tag
+
+subscribeToNewChannel = (tagName) ->
+  crt.clearQueue()
+  window.tag = tagName
+  console.log "tag submitted: " + tagName
+
+  # get backlog of videos to start playing
+  enqueueRecentVideosForTag window.tag
+
 
 $().ready ->
   # setTimeout(introduction(), 2500);
-  $("input").attr "value", tag
+  $("input").attr "value", window.tag
   $("a#next").click ->
     playNextVideo()
-    enqueueVideosForTag tag, crt.getMinId()
+    enqueueVideosForTag window.tag, crt.getMinId()
 
   # we want to make sure we enqueue the video first before we enqueue channel's videos
-  getVideoByTagAndId tag, video_id  if video_id
-  enqueueRecentVideosForTag tag  if tag
+  getVideoByTagAndId window.tag, video_id  if video_id
+  enqueueRecentVideosForTag window.tag  if window.tag
 
   $("input").bind "enterKey", (e) ->
     newTag = $(this)[0].value
-    crt.clearQueue()
-    tag = newTag
-    console.log "tag submitted: " + newTag
-
-    # get backlog of videos to start playing
-    enqueueRecentVideosForTag tag
+    subscribeToNewChannel newTag
 
   $("input").keyup (e) ->
-    $(this).trigger "enterKey"  if e.keyCode is 13
+    $(this).trigger "enterKey" if e.keyCode is 13
 
     # create a hidden div with input text and find width
     $("#hidden").html $(this).val()
@@ -111,6 +115,9 @@ $().ready ->
     if width < 600
       container = $(this).parent()
       $(container).css width: width
+
+  $("#submit").click ->
+    $("input").trigger "enterKey"
 
   # add modal and overlay on click
   $("#overlay, #exit-modal").click ->

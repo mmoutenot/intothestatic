@@ -33,11 +33,11 @@ class window.CRT
 
   twitterShareLink: (videoId) ->
     twitterShareUrl = "https://twitter.com/share?url=http://intothestatic.com/channel/"
-    twitterShareUrl += tag
+    twitterShareUrl += window.tag
     twitterShareUrl += "/video/"
     twitterShareUrl += videoId
     twitterShareUrl += "&text=Found%20this%20video%20on%20the%20%23"
-    twitterShareUrl += tag
+    twitterShareUrl += window.tag
     twitterShareUrl += "%20channel%20via%20@intothestatic"
 
   play: (video_data) ->
@@ -52,6 +52,7 @@ class window.CRT
     console.log "loading/playing " + source
     $('#twitter-share').attr('href', @twitterShareLink(video_data.id))
     @updateDetails video_data
+    @videosAlreadyPlayed[video_data.id] = true
     @displayNextPreview()
     this
 
@@ -102,7 +103,7 @@ class window.CRT
       @play next
 
       @lastPlayed = next
-      @videosAlreadyPlayed[next.id] = true
+      console.log @videosAlreadyPlayed
 
       $("#next").html "next"
     else

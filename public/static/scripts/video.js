@@ -44,11 +44,11 @@
     CRT.prototype.twitterShareLink = function(videoId) {
       var twitterShareUrl;
       twitterShareUrl = "https://twitter.com/share?url=http://intothestatic.com/channel/";
-      twitterShareUrl += tag;
+      twitterShareUrl += window.tag;
       twitterShareUrl += "/video/";
       twitterShareUrl += videoId;
       twitterShareUrl += "&text=Found%20this%20video%20on%20the%20%23";
-      twitterShareUrl += tag;
+      twitterShareUrl += window.tag;
       return twitterShareUrl += "%20channel%20via%20@intothestatic";
     };
 
@@ -67,6 +67,7 @@
       console.log("loading/playing " + source);
       $('#twitter-share').attr('href', this.twitterShareLink(video_data.id));
       this.updateDetails(video_data);
+      this.videosAlreadyPlayed[video_data.id] = true;
       this.displayNextPreview();
       return this;
     };
@@ -109,7 +110,7 @@
         }
         this.play(next);
         this.lastPlayed = next;
-        this.videosAlreadyPlayed[next.id] = true;
+        console.log(this.videosAlreadyPlayed);
         return $("#next").html("next");
       } else {
         this.current = null;
