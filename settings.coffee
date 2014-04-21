@@ -5,7 +5,7 @@ exports.express = express
 # database setup
 #################
 # Mongo
-mongoHostname = process.env.IG_MONGO_HOSTNAME || 'mongodb://localhost/test'
+mongoHostname = process.env.MONGO_URL || 'mongodb://localhost/test'
 mongoose = require 'mongoose'
 mongoose.connect mongoHostname
 exports.mongoose = mongoose
