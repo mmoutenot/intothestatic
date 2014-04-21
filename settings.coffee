@@ -18,8 +18,8 @@ db.once "open", callback = ->
 # Redis
 RedisStore = require('connect-redis')(express)
 
-exports.REDIS_PORT = process.env.IG_REDIS_PORT || 6379
-exports.REDIS_HOST = process.env.IG_REDIS_HOST
+exports.REDIS_PORT = process.env.REDIS_PORT || 6379
+exports.REDIS_HOST = process.env.REDIS_IP || '127.0.0.1'
 exports.redisStore = RedisStore
 
 #################
