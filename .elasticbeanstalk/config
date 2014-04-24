@@ -1,0 +1,14 @@
+[global]
+ApplicationName=intothestatic
+ApplicationVersionName=git-0e8035ce33af6c0c0857370f0ccc831a2f2ddb48-1389153921513
+AwsCredentialFile=/Users/mmoutenot/.elasticbeanstalk/aws_credential_file
+DevToolsEndpoint=git.elasticbeanstalk.us-east-1.amazonaws.com
+EnvironmentName=intothestatic-env
+EnvironmentType=LoadBalanced
+InstanceProfileName=aws-elasticbeanstalk-ec2-role
+OptionSettingFile=/Users/mmoutenot/workspace/intothestatic-coffee/.elasticbeanstalk/optionsettings.intothestatic-env
+RdsEnabled=No
+Region=us-east-1
+ServiceEndpoint=https://elasticbeanstalk.us-east-1.amazonaws.com
+SolutionStack=32bit Amazon Linux 2013.09 running Node.js
+

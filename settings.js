@@ -26,9 +26,9 @@
 
   exports.REDIS_URL = url.parse(process.env.REDIS_URL);
 
-  exports.REDIS_HOST = exports.REDIS_URI.hostname;
+  exports.REDIS_HOST = exports.REDIS_URL.hostname;
 
-  exports.REDIS_PORT = exports.REDIS_URI.port;
+  exports.REDIS_PORT = exports.REDIS_URL.port;
 
   RedisStore = require('connect-redis')(express);
 

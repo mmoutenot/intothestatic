@@ -1,0 +1,50 @@
+[aws:autoscaling:asg]
+Custom Availability Zones=
+MaxSize=2
+MinSize=1
+
+[aws:autoscaling:launchconfiguration]
+EC2KeyName=elasticbeanstalk
+InstanceType=t1.micro
+
+[aws:ec2:vpc]
+ELBScheme=public
+ELBSubnets=
+Subnets=
+VPCId=
+
+[aws:elasticbeanstalk:application]
+Application Healthcheck URL=
+
+[aws:elasticbeanstalk:application:environment]
+IG_CLIENT_ID=a5cf5a8ec091425dbca8eb0ffda482c2
+IG_CLIENT_SECRET=1c39d51507964984b3af9642420292ec
+IG_HOSTNAME=http://intothestatic-env-awfrjf2t5y.elasticbeanstalk.com/
+IG_REDIS_HOST=intothestatic-cache.try6ye.0001.use1.cache.amazonaws.com
+IG_REDIS_PORT=6379
+IG_SESSION_SECRET=asdf452ett2T6rgAgggdsfy1
+PARAM1=
+PARAM2=
+PARAM3=
+PARAM4=
+PARAM5=
+
+[aws:elasticbeanstalk:container:nodejs]
+GzipCompression=false
+NodeCommand=
+NodeVersion=0.8.26
+ProxyServer=nginx
+
+[aws:elasticbeanstalk:container:nodejs:staticfiles]
+/public=/public/static
+
+[aws:elasticbeanstalk:hostmanager]
+LogPublicationControl=false
+
+[aws:elasticbeanstalk:monitoring]
+Automatically Terminate Unhealthy Instances=true
+
+[aws:elasticbeanstalk:sns:topics]
+Notification Endpoint=
+Notification Protocol=email
+
