@@ -1,4 +1,5 @@
 express = require 'express'
+url = require 'url'
 exports.express = express
 
 #################
@@ -16,10 +17,7 @@ db.once "open", callback = ->
   console.log 'connected to mongodb'
 
 # Redis
-exports.REDIS_PORT = process.env.REDIS_PORT || 6379
-exports.REDIS_HOST = process.env.REDIS_HOST || '127.0.0.1'
-exports.REDIS_URI = (document.createElement 'a').href process.env.REDIS_URL
-
+exports.REDIS_URL = url.parse process.env.REDIS_URL
 exports.REDIS_HOST = exports.REDIS_URI.hostname
 exports.REDIS_PORT = exports.REDIS_URI.port
 
