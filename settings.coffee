@@ -18,7 +18,10 @@ db.once "open", callback = ->
 # Redis
 exports.REDIS_PORT = process.env.REDIS_PORT || 6379
 exports.REDIS_HOST = process.env.REDIS_HOST || '127.0.0.1'
-exports.REDIS_URL = process.env.REDIS_URL
+exports.REDIS_URI = (document.createElement 'a').href process.env.REDIS_URL
+
+exports.REDIS_HOST = exports.REDIS_URI.hostname
+exports.REDIS_PORT = exports.REDIS_URI.port
 
 RedisStore = require('connect-redis')(express)
 exports.redisStore = RedisStore

@@ -14,7 +14,10 @@
     app.use(express.cookieParser());
     app.use(express.session({
       store: new settings.redisStore({
-        url: settings.REDIS_URL
+        host: settings.REDIS_HOST,
+        port: settings.REDIS_PORT,
+        db: 2,
+        pass: ''
       }),
       secret: process.env.IG_SESSION_SECRET || '1asdfkljh32rsadfa34'
     }));

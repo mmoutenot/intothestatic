@@ -26,7 +26,11 @@
 
   exports.REDIS_HOST = process.env.REDIS_HOST || '127.0.0.1';
 
-  exports.REDIS_URL = 'redis://172.17.0.2:6397';
+  exports.REDIS_URI = (document.createElement('a')).href(process.env.REDIS_URL);
+
+  exports.REDIS_HOST = exports.REDIS_URI.hostname;
+
+  exports.REDIS_PORT = exports.REDIS_URI.port;
 
   RedisStore = require('connect-redis')(express);
 

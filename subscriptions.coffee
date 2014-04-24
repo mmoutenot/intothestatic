@@ -11,9 +11,9 @@ subscriptionPattern = 'channel:*'
 
 # We use Redis's pattern subscribe command to listen for signals
 # notifying us of new updates.
-redisClient = redis.createClient(settings.REDIS_URL)
+redisClient = redis.createClient(settings.REDIS_PORT, settings.REDIS_HOST)
 
-pubSubClient = redis.createClient(settings.REDIS_URL)
+pubSubClient = redis.createClient(settings.REDIS_PORT, settings.REDIS_HOST)
 pubSubClient.psubscribe subscriptionPattern
 
 pubSubClient.on 'pmessage', (pattern, channel, message) ->

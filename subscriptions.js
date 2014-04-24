@@ -18,9 +18,9 @@
 
   subscriptionPattern = 'channel:*';
 
-  redisClient = redis.createClient(settings.REDIS_URL);
+  redisClient = redis.createClient(settings.REDIS_PORT, settings.REDIS_HOST);
 
-  pubSubClient = redis.createClient(settings.REDIS_URL);
+  pubSubClient = redis.createClient(settings.REDIS_PORT, settings.REDIS_HOST);
 
   pubSubClient.psubscribe(subscriptionPattern);
 

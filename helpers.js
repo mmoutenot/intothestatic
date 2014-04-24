@@ -265,7 +265,7 @@
 
   redis = require('redis');
 
-  redisClient = redis.createClient(settings.REDIS_URL);
+  redisClient = redis.createClient(settings.REDIS_PORT, settings.REDIS_HOST);
 
   exports.isValidRequest = isValidRequest;
 
