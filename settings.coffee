@@ -20,6 +20,7 @@ exports.REDIS_PORT = process.env.REDIS_PORT || 6379
 exports.REDIS_HOST = process.env.REDIS_HOST || '127.0.0.1'
 exports.REDIS_URL = 'redis://172.17.0.2:6397'
 
+
 RedisStore = require('connect-redis')(express)
 exports.redisStore = RedisStore
 
