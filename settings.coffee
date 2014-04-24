@@ -16,11 +16,11 @@ db.once "open", callback = ->
   console.log 'connected to mongodb'
 
 # Redis
-RedisStore = require('connect-redis')(express)
-
 exports.REDIS_PORT = process.env.REDIS_PORT || 6379
 exports.REDIS_HOST = process.env.REDIS_HOST || '127.0.0.1'
 exports.REDIS_URL = process.env.REDIS_URL || "redis://#{ exports.REDIS_HOST }:#{exports.REDIS_PORT }"
+
+RedisStore = require('connect-redis')(express)
 exports.redisStore = RedisStore
 
 #################
