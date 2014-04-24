@@ -26,7 +26,7 @@
 
   exports.REDIS_HOST = process.env.REDIS_HOST || '127.0.0.1';
 
-  exports.REDIS_URL = process.env.REDIS_URL || ("redis://" + exports.REDIS_HOST + ":" + exports.REDIS_PORT);
+  exports.REDIS_URL = process.env.REDIS_URL;
 
   RedisStore = require('connect-redis')(express);
 
