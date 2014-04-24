@@ -7,12 +7,7 @@ inst = settings.inst
 app.configure ->
   app.use express.cookieParser()
   app.use express.session(
-    store: new settings.redisStore(
-      host: settings.REDIS_HOST
-      port: settings.REDIS_PORT
-      db: 2
-      pass: ''
-    )
+    store: new settings.redisStore(url: settings.REDIS_URL)
     secret: process.env.IG_SESSION_SECRET or '1asdfkljh32rsadfa34'
   )
 

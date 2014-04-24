@@ -202,7 +202,7 @@ getCurrentSubscriptions = (callback) ->
 # Requires and Exports
 ########################################
 redis = require 'redis'
-redisClient = redis.createClient(settings.REDIS_PORT, settings.REDIS_HOST)
+redisClient = redis.createClient(settings.REDIS_URL)
 
 exports.isValidRequest            = isValidRequest
 exports.debug                     = debug
