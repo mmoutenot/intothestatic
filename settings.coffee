@@ -10,6 +10,7 @@ mongoHostname = process.env.MONGO_URL || 'mongodb://localhost/test'
 mongoose = require 'mongoose'
 
 console.log "Connecting to MongoDB: #{mongoHostname}"
+
 mongoose.connect mongoHostname
 exports.mongoose = mongoose
 
