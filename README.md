@@ -7,4 +7,3 @@ intothestatic
 - Added button to tweet
 - Added modal functionality. To show the 'Instagram is required' modal, add class 'overlay-active' to the body
 
-
